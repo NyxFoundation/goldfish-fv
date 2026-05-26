@@ -1,0 +1,23 @@
+### Statement (line 1705)
+Theorem 6. Suppose the Goldfish execution is ( 1
+2, 4∆)-compliant. Then, Gold-
+fish with fast confirmations satisfies liveness with Tconf = Θ(κ) (w.o.p.).
+Consider a slot t, such that there are ( 3
+4 + 3
+2ϵ)n thrv honest validators eligible
+to vote at slot t and awake at round 4∆t+∆. Suppose an honest validator id with
+proposal P ∗is recognized as the leader of a slot t by all awake honest validators
+at round 4∆t + ∆(Alg. 2, l. 16). Then all honest validators awake at round
+4∆t + 2∆fast confirm P ∗.B in Alg. 4, l. 9.
+Liveness is stated below and follows from Thm. 2 and fast confirmation from
+Lem. 2.
+
+### Proof (line 1717)
+Proof of Thm. 6. Proof of liveness follows from Thm. 2.
+For the second part of the proof, by Lem. 2, all of eligible and awake honest
+validators vote for P ∗.B at slot t. Then, the buffer of any honest validator awake
+at round 4∆t + 2∆contains at least ( 3
+4 + ϵ
+2)n thrv votes (by Chernoff bound) for
+the block P ∗.B, implying that all honest validators awake at rounds 4∆t + 2∆
+fast confirm P ∗.B at the respective slots.

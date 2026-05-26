@@ -1,0 +1,151 @@
+### Statement (line 1337)
+Lemma 1. Suppose the Goldfish execution is ( 1
+2, 3∆)-compliant. Then, w.o.p.,
+for every slot t, adversary validators at round 3∆(t + 1) + ∆eligible to vote at
+slot t are less than honest validators awake at round 3∆t + ∆and eligible to
+vote at slot t. Also w.o.p., all slot intervals of length κ have at least one slot t
+where an honest validator is recognized as the slot t leader by all awake honest
+validators at round 3∆t + ∆.8
+Lem. 1’s proof uses correctness, uniqueness and pseudorandomness of VRF-
+based lotteries along with Chernoff bounds.
+
+### Proof (line 1346)
+Proof of Lem. 1. By the pseudorandomness property of the VRF-based lottery
+(App. G), for any given slot t and validators id1 and id2, id1 ̸= id2,
+Pr
+h
+Winslv((id, t), Openlv
+id1(t))
+i
+= thrv
+(1)
+Pr
+h
+Winslb((id, t), Openlb
+id1(t))
+i
+= thrb
+(2)
+Pr
+h
+Prio(Openlb
+id1(t)) < Prio(Openlb
+id2(t))
+i
+= 1
+2,
+(3)
+where lv = (vote, thrv) and lb = (block, thrb) are the lotteries, and Openlv
+id1(t),
+Openlb
+id1(t), Openlb
+id2(t), and Openlv)
+id2(t) are independent random variables.
+We first consider the protocol without key-evolving primitives. By the unique-
+ness property of the lottery (App. G), w.o.p., for all validators id and slots t,
+the ticket (id, t) can be opened at most one unique opening (Alg. 2, l. 20). Let
+˜Ht denote the number of honest validators awake at round 3∆t + ∆and eligi-
+ble to vote at slot t. Let ˜At denote the number of adversary validators at round
+3∆(t+1)+∆that are eligible to vote at slot t. Recall that Ar and Hr denote the
+number of adversary and honest validators awake at round r respectively (note
+that the honest validators have been awake since the closest round 3∆t + 2∆
+same as or preceding r). Let nt = H3∆t+∆+ A3∆(t+1)+∆≥n0 = Θ(κ).
+By the pseudorandomness property, the adversary cannot predict in advance
+which honest validators will become eligible to vote or propose at a given slot.
+Moreover, if the adversary decides to corrupt the honest validators eligible to
+vote at a slot t after learning their identities at round 3∆t + ∆, it takes over 3∆
+rounds for the corruption to take effect, implying that these validators cannot
+be counted as part of ˜At. Hence, as
+Ar
+Ar+Hr−3∆≤β < 1
+2 −ϵ for all rounds r,
+w.o.p.,
+E[ ˜Ht] = H3∆t+∆thrv ≥(1
+2 + ϵ)ntthrv
+E[ ˜At] = A3∆(t+1)+∆thrv ≤(1
+2 −ϵ)ntthrv
+By a Chernoff bound,
+Pr
+
+˜Ht < 1
+2ntthrv
+
+≤e−
+ϵ2
+1+2ϵ ntthrv
+8 The proposer-lottery threshold thrb can be tuned following Algorand [33, Appendix-
+B.1] so that each slot has at least one eligible proposer.
+
+Pr
+
+˜At > 1
+2ntthrv
+
+≤e−
+ϵ2
+1+3ϵ ntthrv.
+Thus, at any given slot t, ˜Ht > ˜At, except with probability
+2 exp (−
+ϵ2
+1 + 3ϵn0thrv).
+By a union bound, every slot t has more honest validators awake at round 3∆t+∆
+and eligible to vote at slot t than adversary validators at round 3∆(t + 1) + ∆,
+eligible to vote at slot t (and more than 1
+2n0thrv such honest validators), except
+with probability
+2Thor exp
+
+−
+ϵ2
+1 + 3ϵn0thrv
+
++ negl(λ) = negl(κ) + negl(λ),
+since n0 = Θ(κ) and Thor = Θ(κ). By the same reasoning, w.o.p., every slot t
+has more honest validators awake and eligible to propose for slot t at round 3∆t
+than adversary validators at round 3∆t + ∆, eligible to propose for slot t.
+Finally, for any given slot t, each valid slot t proposal broadcast within rounds
+[3∆t, 3∆t + ∆] has the same probability of achieving the minimum precedence
+up to terms negligible in λ.9 Now, at a slot t, if an honest validator’s proposal
+achieves the minimum precedence among the valid slot t proposals broadcast by
+∆rounds into the slot, then that validator is identified as the slot leader by all
+honest validators awake at round 3∆t + ∆. Taking a fixed t ≥κ, the probability
+that no awake honest validator’s proposal has the minimum precedence among
+the valid slot s proposals broadcast by ∆rounds into the slot, during the slots
+s ∈[t −κ, t], is upper bounded by 2−κ + negl(κ) + negl(λ). Union bounding over
+all Thor many such intervals, we find that w.o.p., all slot intervals of length κ
+have at least one slot t, where an honest validator is identified as the slot leader
+by all awake honest validators at round 3∆t + ∆.
+Now with key-evolving primitives, we define ˜Ht = H3∆t+∆and ˜At = A3∆t+∆.
+Similarly, we define nt = H3∆t+∆+A3∆t+∆≥n0 = Θ(κ). In this case,
+Ar
+Ar+Hr ≤
+β < 1
+2 −ϵ for all rounds r. Note that the adversary cannot predict in advance
+which honest validators will become eligible to vote or propose at a given slot
+due to the pseudorandomness property of the lottery. Moreover, if the adversary
+corrupts the honest validators eligible to vote at a slot t after learning their
+identities at round 3∆t+∆, it cannot make these validators broadcast new valid
+votes for slot t since the keys for slot t would have been evolved prior to adversary
+corrruption (i.e., these corrupted validators cannot be counted as part of ˜At).
+Hence, the number of valid slot t votes adversary validators can broadcast by
+round 3∆(t + 1) + ∆is upper bounded by the number of adversary validators at
+round 3∆t+∆that are eligible to vote at slot t. Finally, by the same calculations
+as above, every slot t has more honest validators eligible to vote and awake at
+round 3∆t + ∆than the adversary validators at round 3∆(t + 1) + ∆eligible
+to vote at slot t (and more than 1
+2n0thrv such honest validators), except with
+9 We assume that poly(κ) negl(λ) = negl(λ).
+
+probability
+2Thor exp
+
+−
+ϵ2
+1 + 3ϵn0thrv
+
++ negl(λ) = negl(κ) + negl(λ).
+Similarly, w.o.p., every slot t has more honest validators awake and eligible
+to propose for slot t at round 3∆t than adversary validators at round 3∆t +
+∆eligible to propose for slot t. Thus, via the same argument, w.o.p., all slot
+intervals of length κ have at least one slot t, where an honest validator is identified
+as the slot leader by all awake honest validators at round 3∆t + ∆.

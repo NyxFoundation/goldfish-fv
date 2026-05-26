@@ -1,0 +1,13 @@
+### Statement (line 2027)
+Lemma 6 (Safety and liveness of chava under synchrony). Suppose a
+( 1
+2, 3∆)-compliant execution of Goldfish in the synchronous sleepy network model
+of Sec. 2. Then, w.o.p., the available ledger chava satisfies 1/2-safety and 1/2-
+liveness (at all times).
+
+### Proof (line 2033)
+Proof. By Prop. 2, checkpointing of blocks does not alter the fork-choice rule at
+Alg. 5, l. 2 for any awake honest validator. Concretely, if the honest validators
+started the fork-choice rule from the genesis block at all rounds instead of the
+latest checkpoint in view, then they would end up with the same execution.
+Thus, the security of chava follows from Thm. 2.

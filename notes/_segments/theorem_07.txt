@@ -1,0 +1,17 @@
+### Statement (line 1925)
+Theorem 7 (Ebb-and-flow property). Goldfish combined with accountability
+gadgets (cf. App. D.2) satisfies the ebb-and-flow property of Def. 4.
+
+### Proof (line 2254)
+Proof of Thm. 7. We first show the property P1, namely, the accountable safety
+and liveness of the accountable, final prefix ledger chacc under partial synchrony
+in the sleepy model. By [61, Thm. 3], chacc provides accountable safety with
+resilience n/3 except with probability negl(λ) under partial synchrony in the
+sleepy model. By Lem. 9, under the same model, the available ledger chava is
+secure after round max(GAT, GST) + ∆+ 2Tchkpt. Using this fact and Lem. 7,
+we can state that, w.o.p., chacc satisfies liveness after round max(GAT, GST) +
+∆+ 2Tchkpt with transaction confirmation time Tconf = Θ(κ2).
+Finally, the property P2 follows from Lem. 6, and Prefix follows by construc-
+
+tion of the ledgers chacc and chava. This concludes the proof of the ebb-and-flow
+property.

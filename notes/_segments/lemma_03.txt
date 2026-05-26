@@ -1,0 +1,27 @@
+### Statement (line 1566)
+Lemma 3. Suppose a ( 1
+2, 3∆)-compliant execution of Goldfish in the syn-
+chronous sleepy network model. Consider a slot t where all honest validators
+awake at round 3∆t + ∆and eligible to vote at slot t, vote for a descendant of
+B. Then, w.o.p., all honest validators awake at round 3∆(t + 1) + ∆and eligible
+to vote at slot t + 1, vote for a descendant of B.
+
+### Proof (line 1573)
+Proof. By Lem. 1, w.o.p., for every slot t, the number of adversary validators
+at round 3∆(t + 1) + ∆and eligible to vote at slot t is less than the number of
+honest validators awake at round 3∆t + ∆and eligible to vote at slot t.
+Let t be a slot such that all honest validators awake at round 3∆t + ∆and
+eligible to vote at t voted for a descendant of B. Pick any honest validator id
+awake at round 3∆(t+1)+∆and eligible to vote at slot t+1. Since id must have
+been awake at least since round 3∆t+2∆, its bvtree at round 3∆t+2∆contains
+all votes broadcast by honest validators awake at round 3∆t + ∆and eligible to
+vote at slot t (Alg. 2, l. 19). The same is true for its bvtree at round 3∆(t+1)+∆,
+even after id merges its bvtree with that of any proposal (Alg. 2, l. 7). Moreover,
+the number of honest validators awake at round 3∆t + ∆and eligible to vote at
+slot t is greater than the number of adversary validators at round 3∆(t + 1) + ∆
+that are eligible to vote at slot t.
+Consequently, upon invoking the GHOST-Eph fork-choice rule at round
+3∆(t+1)+∆(Alg. 2, l. 22), id observes that at every iteration of the fork choice
+(Alg. 3, l. 7), blocks consistent with B have more votes than blocks conflicting
+with B. Thus, at round 3∆(t + 1) + ∆, fork choice returns a descendant of B,
+and id votes for it.

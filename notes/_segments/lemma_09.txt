@@ -1,0 +1,68 @@
+### Statement (line 2187)
+Lemma 9 (Healing property, analogue of Thm. 5 of [61]). Consider a
+( 1
+3, 3∆)-compliant execution of Goldfish in the partially synchronous sleepy net-
+work model of Sec. 2. Then, chava is secure with transaction confirmation time
+Tchkpt + Ttmout + Tbft = Θ(κ) after round max(GAT, GST) + ∆+ 2Tchkpt.
+Moreover, for the iteration proposal ˆbc of an honest iteration leader broadcast
+at round r, it holds that ˆbc ⪯B⌈κ for any B identified in Alg. 2, ll. 8, 22, 28 by
+any awake honest validator after r, and ˆbc contains a fresh honest block that is
+not in the prefix of any checkpoint from before iteration c.
+
+### Proof (line 2196)
+Proof of Lem. 9 is different from the proof of [61, Thm. 5] since the account-
+ability gadget is applied to a longest chain protocol in [61], whereas it is applied
+to Goldfish in our case. Therefore, the full proof is presented below.
+Proof. By [61, Thm. 3], chacc provides accountable safety with resilience n/3 ex-
+cept with probability negl(λ) in the partially synchronous sleepy network model.
+As the execution is ( 1
+3, 3∆)-compliant, w.o.p., no two checkpoints observed by
+awake honest validators conflict.
+Let c be the largest iteration such that a block B was checkpointed in the
+view of some honest validator before max(GAT, GST). (Let c = 0 and B be the
+genesis block if there does not exist such an iteration.) Then, by Prop. 4, if an
+honest validator enters an iteration c′ > c at some round r ≥max(GAT, GST) +
+∆+Tchkpt, every honest validator enters iteration c by round r+∆. Let c′ be the
+first iteration such that the first honest validator to enter c′ enters it after round
+max(GAT, GST)+∆+Tchkpt (e.g., at some round r such that max(GAT, GST)+
+∆+ Tchkpt < r < max(GAT, GST) + ∆+ 2Tchkpt). Then, all honest validators
+enter iteration c′ and agree on the last checkpointed block within ∆rounds.
+Subsequently, the honest validators wait for Tchkpt rounds before casting any
+gadget vote for a checkpoint proposal of iteration c′, during which no block can
+be checkpointed (Prop. 5, gap property).
+By Lem. 1, w.o.p., the slot interval of length κ starting after round r + ∆
+contains a slot t with an honest leader and proposal P ∗. After round r ≥GST,
+
+all messages broadcast by honest validators are received by all honest validators
+within ∆rounds. As honest validators agree on the last checkpointed block
+during the interval [r + ∆, r + Tchkpt], by the absence of new checkpoints, the
+GHOST-Eph fork-choice rule starts at the same last checkpointed block for all
+honest validators during the interval (Alg. 3, l. 2). Then, by Lem. 1, w.o.p.,
+P ∗.B ⪯B for any B identified in Alg. 2, ll. 8, 22, 28 by any awake honest
+validator in any round after 3∆t+2∆, until at least a new block is checkpointed
+in the view of an honest validator.
+By Lem. 8 (recency property), the next block checkpointed in the view of
+an honest validator (which happens earliest at some iteration c′′ ≥c′ and round
+r′ ≥r + Tchkpt by Prop. 5, the gap property) must have been confirmed by
+some honest validator id at some round within [r′ −Trcnt, r′], where r′ −Trcnt ≥
+r + 6∆κ + 4∆. Hence, the new checkpointed block is κ slots deep in the chains
+identified in Alg. 2, ll. 8, 22, 28 by id, and is a descendant of P ∗.B. This implies
+P ∗.B ⪯B for any B identified in Alg. 2, ll. 8, 22, 28 by any awake honest
+validator in any round after 3∆t + 2∆indefinitely.
+Note that if the iteration leader was honest, for its proposal ˆbc broadcast at
+some round r′′, it holds that ˆbc ⪯B⌈κ for any B identified in Alg. 2, ll. 8, 22, 28
+by any awake honest validator after round r. Moreover, P ∗.B ⪯ˆbc, implying
+that honest checkpoint proposals contain fresh honest blocks in their prefixes.
+Finally, we extend the above argument to future checkpoints by induction.
+Let Bn denote the sequence of checkpointed blocks, ordered by their iteration
+numbers cn ≥c′, c1 = c′′. The rounds rn, at which the blocks Bn are first
+checkpointed in the view of an honest validator satisfy the relation rn+1 ≥
+rn + Tchkpt and r1 = r′′. Via the inductive assumption and the reasoning above,
+w.o.p., in each interval [rn+∆, rn+1−Trcnt], there exists a slot tn with an honest
+leader and proposal Pn such that Pn.B ⪯B for any B identified in Alg. 2, ll. 8,
+22, 28 by any awake honest validator in any round after 3∆tn + 2∆indefinitely.
+Hence, for a sufficiently large confirmation time exceeding the maximum possible
+iteration length (i.e., Tconf ≥Tchkpt+Ttmout+Tbft), these honest blocks imply the
+security of the Goldfish protocol after round max(GAT, GST) + ∆+ 2Tchkpt.
+Thm. 1 holds for the honest blocks proposed in intervals [rn+∆, rn+1−Trcnt]
+as all honest validators agree on the latest checkpoint during these intervals.

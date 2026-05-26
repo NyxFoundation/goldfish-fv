@@ -1,0 +1,21 @@
+### Statement (line 1548)
+Lemma 2. Suppose an execution of Goldfish in the synchronous sleepy network
+model, and validator id∗with proposal P ∗is recognized as leader of a slot t by
+all awake honest validators at round 3∆t + ∆(Alg. 2, l. 16). Then, all honest
+validators awake at round 3∆t + ∆and eligible to vote at t vote for P ∗.B at t.
+
+### Proof (line 1552)
+Proof. Let T ′ = P ∗.T , and B∗and T ∗denote the buffer and bvtree of
+id∗at round 3∆t. Since id∗is honest, it must have broadcast P ∗at round
+3∆t with bvtree T ′ = Merge(T ∗, B∗) and a new block P ∗.B with parent
+GHOST-Eph(T ′, t −1) (Alg. 2, ll. 7, 8, 12).
+By synchrony, any message that a non-asleep honest validator id could have
+added to its bvtree Tid by 3∆(t −1) + 2∆, is received by id∗by 3∆t, and thus
+in T ′. As awake honest validators do not update their bvtrees and no honest
+validators turn awake in the interval (3∆(t −1) + 2∆, 3∆t + ∆), for any honest
+validator id awake at round 3∆t + ∆, Tid ⊆T ′ prior to Alg. 2, l. 19.
+Since id∗is recognized as the leader of slot t by all awake honest validators at
+round 3∆t + ∆, at that round, each awake honest validator id merges its bvtree
+with T ′ ∪{P ∗.B} (Alg. 2, l. 19) and reaches Tid = T ′ ∪{P ∗.B}. Consequently,
+each honest validator id awake at round 3∆t+∆and eligible to vote at slot t votes
+for P ∗.B due to the recursive structure of the GHOST-Eph rule (Alg. 3).

@@ -1,0 +1,11 @@
+### Statement (line 1628)
+Proposition 1. Suppose Thor = poly(κ). Then, w.o.p., there can be at most
+(1 + ϵ)n thrv validators that are eligible to vote at any given slot. If the Goldfish
+execution is ( 1
+2, 4∆)-compliant, then, w.o.p., for all slots t, the number of ad-
+versary validators at round 4∆(t + 1) + ∆, eligible to vote at slot t, is less than
+1
+2n thrv.
+
+### Proof (line 1635)
+Proof follows from a Chernoff bound.

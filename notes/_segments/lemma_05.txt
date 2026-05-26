@@ -1,0 +1,37 @@
+### Statement (line 1636)
+Lemma 5. Suppose the Goldfish execution is ( 1
+2, 4∆)-compliant in the syn-
+chronous sleepy network model, and an honest validator id∗fast confirms a block
+B at slot t. Then, w.o.p, all honest validators awake at round 4∆(t+1)+∆and
+eligible to vote at slot t + 1, vote for a descendant of B at slot t + 1.
+
+### Proof (line 1643)
+Proof of Lem. 5. By Prop. 1, w.o.p., the number of adversary validators at round
+4∆(t + 1) + ∆, eligible to vote at slot t, is less than 1
+2n thrv. An eligible awake
+honest validator sends a single slot t vote at round 4∆t + ∆, implying that over
+( 3
+4 + ϵ
+2)n thrv −1
+2n thrv = ( 1
+4 + ϵ
+2)n thrv validators broadcast a single slot t vote
+by round 4∆(t+1)+∆, and that is for a descendant of B. By Prop. 1, w.o.p., for
+all slots t, there can be at most (1 + ϵ)n thrv validators that are eligible to vote
+at t. Hence, the number of valid slot t votes for the descendants of any block B′
+conflicting with B must be less than (1+ϵ)n thrv −( 1
+4 + ϵ
+2)n thrv = ( 3
+4 + ϵ
+2)n thrv
+at any given round. The validator id∗broadcasts B and over ( 3
+4 + ϵ
+2)n thrv valid
+votes for it (in pieces) at round 4∆t+2∆. Each honest validator, awake at round
+4∆(t+1)+∆and eligible to vote at slot t+1, observes these votes in its bvtree at
+the round of voting (Alg. 4, l. 11). Upon invoking the GHOST-Eph fork-choice
+rule at any of the rounds 4∆t + 3∆, 4∆(t + 1) or 4∆(t + 1) + ∆(Alg. 2, ll. 8,
+22, 28), for any awake honest validator id with bvtree T ′, Votes(T ′, B, t) >
+Votes(T ′, B′, t) for any block B′ conflicting with B. This implies that all honest
+validators, awake at round 4∆(t + 1) + ∆and eligible to vote at slot t + 1 all
+vote for B or one of its descendants at slot t + 1.

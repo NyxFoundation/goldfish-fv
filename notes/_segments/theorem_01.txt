@@ -1,0 +1,22 @@
+### Statement (line 1488)
+Theorem 1. Suppose a ( 1
+2, 3∆)-compliant execution of Goldfish in the syn-
+chronous sleepy network model of Sec. 2, and validator id with proposal P ∗is
+recognized as the leader of a slot t by all awake honest validators at round 3∆t+∆
+(Alg. 2, l. 16). Then, w.o.p., P ∗.B ⪯B for any B identified in Alg. 2, ll. 8,
+22, 28 by any awake honest validator in any round r ≥3∆t + 2∆.
+
+### Proof (line 1591)
+Proof of Thm. 1. From Lems. 1, 2 and 3, it follows by induction that w.o.p., for
+all t′ ≥t, all honest validators awake at round 3∆t′ + ∆and eligible to vote at
+slot t′, vote for a descendant of P ∗.B.
+By synchrony, the honest votes of slot t′ reach all honest validators awake
+at 3∆t′ + 2∆by then, when they also merge the votes into their bvtrees. The
+number of honest validators awake at round 3∆t′ +∆and eligible to vote at slot
+t′ is greater than the number of adversary validators by round 3∆(t′+1)+∆that
+are eligible to vote at slot t′ (by Lem. 1). Upon invoking the GHOST-Eph rule of
+Alg. 2, ll. 8, 22, 28 at 3∆t′ + 2∆, 3∆(t′ + 1) and 3∆(t′ + 1) + ∆, respectively, an
+awake honest validator id (who must have been awake since at least 3∆t′ + 2∆,
+due to the joining procedure) observes that at every iteration of the fork choice
+(Alg. 3, l. 7), blocks consistent with P ∗.B have more votes than blocks conflicting
+with P ∗.B. Thus, id’s fork choice reaches a descendant of P ∗.B.
