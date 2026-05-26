@@ -1,6 +1,7 @@
 import Goldfish.TrackA.Lemma2
 import Goldfish.TrackA.Lemma3
 import Goldfish.TrackA.Theorem1
+import Goldfish.TrackA.Theorem3
 
 /-!
 # Track A — synchronous core
