@@ -6,3 +6,7 @@
 *.swp
 .idea/
 .vscode/
+
+# Lake build artifacts (lake-manifest.json IS committed, to pin dependencies)
+/.lake/
+/build/

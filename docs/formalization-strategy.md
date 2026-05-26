@@ -1,6 +1,6 @@
 ---
 title: Goldfish Lean 4 Formalization Strategy
-last_updated: 2026-05-26
+last_updated: 2026-05-27
 tags:
   - lean4
   - formal-verification
@@ -145,12 +145,25 @@ The following are **not** tracked by per-statement issues; they are prerequisite
 scaffolding assumed by every statement issue. They will be introduced together
 (separately from the statement issues) and live at these paths:
 
-| Path | Contents |
-|---|---|
-| `lakefile.toml`, `lean-toolchain` | Lake build config; pin a Lean toolchain and depend on Mathlib. |
-| `Goldfish/Basic.lean` | Core types: `Block`, `Ledger`/chain with the prefix partial order `⪯`, `BlockVoteTree` + `Merge`/`Children`/`Votes`, validators, slots/rounds, the `(γ,τ)`-compliant predicate, `negl` / `w.o.p.` abstractions. |
-| `Goldfish/Protocol.lean` | Abstract interface: `GHOST-Eph` fork choice and the voting rule as a structure / typeclass of hypotheses (Barrier 3). |
-| `Goldfish/Axioms.lean` | Declared axioms: probabilistic good events (Lem 1 / Lem 4 / Prop 1) and external [61] results (`[61, Thm 3]`, `[61, Thm 4]`, `[61, Prop 3]`), each with a source comment. |
+| Path | Contents | Status |
+|---|---|---|
+| `lakefile.toml`, `lean-toolchain` | Lake build config; toolchain pinned to `leanprover/lean4:v4.29.0`, depends on Mathlib `v4.29.0`. | ✅ in place |
+| `Goldfish/Basic.lean` | Core types: the `BlockTree` prefix partial order `⪯` (genesis `⊥`, ancestors-form-a-chain tree property), `Consistent`/`Conflicts`, the `(γ,τ)`-`Compliant` predicate (Def. 2), `Negligible` (`negl`). | ✅ in place |
+| `Goldfish/Protocol.lean` | Abstract interface: the `Execution` data (slots/rounds, awake/honest/eligible predicates, counts, fork choice, votes) and the `Spec` structure of GHOST-Eph / voting / leader-recognition / synchrony hypotheses (Barrier 3). | ✅ in place |
+| `Goldfish/Axioms.lean` | Declared axioms: probabilistic good events Lemma 1 / Lemma 4 / Proposition 1 (`HonestMajorityPerSlot`, `HonestLeaderEveryWindow`, eligible-voter bounds). | ✅ in place |
+
+**`BlockVoteTree` / `Merge` / `Children` / `Votes`.** Rather than model bvtrees
+operationally, the GHOST-Eph vote tally is abstracted by the `Execution.outvotes`
+predicate and the `Spec` fields that relate it to the fork choice (Barrier 3). An
+operational bvtree model can refine this later without changing theorem
+statements.
+
+**External [61] axioms deferred.** `[61, Thm 3]`, `[61, Thm 4]`, `[61, Prop 2/3/4]`
+are **not** declared in `Goldfish/Axioms.lean` yet. They cannot be *stated*
+faithfully before Track C's vocabulary (the `chacc`/`chava` ledgers, partial
+synchrony, `GST`/`GAT`) exists, and declaring vacuous placeholders would violate
+the no-placeholder discipline. They are introduced together with the Track C base
+types, each with a source comment.
 
 Reference pattern for project layout: [`Koukyosyumei/PoL`](https://github.com/Koukyosyumei/PoL)
 (Apache-2.0, Lake, `Consensus/` module layout).
