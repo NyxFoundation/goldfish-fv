@@ -1,5 +1,5 @@
-import Goldfish.TrackA.Lemma2
-import Goldfish.TrackA.Lemma3
+import Goldfish.SynchronousSecurity.Lemma2
+import Goldfish.SynchronousSecurity.Lemma3
 
 /-!
 # Theorem 1 — an honest leader's proposal stays in every awake honest chain
