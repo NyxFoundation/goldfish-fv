@@ -1,11 +1,11 @@
-import Goldfish.TrackA.Lemma2
-import Goldfish.TrackA.Lemma3
-import Goldfish.TrackA.Theorem1
-import Goldfish.TrackA.Theorem2
-import Goldfish.TrackA.Theorem3
+import Goldfish.SynchronousSecurity.Lemma2
+import Goldfish.SynchronousSecurity.Lemma3
+import Goldfish.SynchronousSecurity.Theorem1
+import Goldfish.SynchronousSecurity.Theorem2
+import Goldfish.SynchronousSecurity.Theorem3
 
 /-!
-# Track A — synchronous core
+# Synchronous security (paper App. B)
 
 Reorg resilience and security under `(1/2, 3∆)`-compliance: Lemmas 1–3 and
 Theorems 1–3. Lemma 1 is the probabilistic good event (axiom in

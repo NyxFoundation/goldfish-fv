@@ -1,4 +1,4 @@
-import Goldfish.TrackA.Theorem1
+import Goldfish.SynchronousSecurity.Theorem1
 import Goldfish.Security
 
 /-!
