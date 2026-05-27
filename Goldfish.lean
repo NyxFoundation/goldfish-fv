@@ -1,0 +1,16 @@
+import Goldfish.Basic
+import Goldfish.Protocol
+import Goldfish.Axioms
+
+/-!
+# Goldfish
+
+Machine-checked formalization of the *Goldfish* Ethereum consensus protocol
+(IACR ePrint 2022/1171). See `docs/formalization-strategy.md` for the proof
+discipline (`axiom` / hypothesis threading, never `sorry`), the track structure,
+and the dependency graph; each numbered statement is tracked by a GitHub issue.
+
+* `Goldfish.Basic` — block-tree prefix order, `(γ,τ)`-compliance, negligibility.
+* `Goldfish.Protocol` — the abstract `Execution` data and `Spec` interface.
+* `Goldfish.Axioms` — probabilistic good events (Lem. 1 / 4, Prop. 1).
+-/
