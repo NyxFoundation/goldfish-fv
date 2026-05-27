@@ -1,5 +1,5 @@
 import Goldfish.SynchronousSecurity.Theorem1
-import Goldfish.Security
+import Goldfish.Ledger
 
 /-!
 # Theorem 3 — reorg resilience

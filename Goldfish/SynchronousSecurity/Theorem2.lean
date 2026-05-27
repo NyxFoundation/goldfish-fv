@@ -1,5 +1,5 @@
 import Goldfish.SynchronousSecurity.Theorem1
-import Goldfish.Security
+import Goldfish.Ledger
 
 /-!
 # Theorem 2 — Goldfish security (safety & liveness), `Tconf = 2κ+2` slots
