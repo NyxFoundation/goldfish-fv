@@ -4,8 +4,8 @@ import Goldfish.Axioms
 /-!
 # Abstract spec for the 4∆ regime (`Spec4Δ`)
 
-`Spec4Δ` is the analogue of `Spec` for the `(1/2, 4∆)`-compliance regime of
-Track B. It adds 4∆-specific protocol mechanics on top of the
+`Spec4Δ` is the analogue of `Spec` for `(1/2, 4∆)`-compliant fast-confirmation
+executions. It adds 4∆-specific protocol mechanics on top of the
 timing-independent `forkChoice_of_outvotes` (shared with `Spec`):
 
 * `fast_vote_forkChoice` — voting rule at `fastVoteRound`

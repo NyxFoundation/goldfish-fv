@@ -8,7 +8,7 @@ import Goldfish.FastConfirmation.Theorem6
 /-!
 # Fast confirmation (paper App. C)
 
-Track B — fast confirmation and security under `(1/2, 4∆)`-compliance:
+Fast confirmation and security under `(1/2, 4∆)`-compliance:
 Lemma 5, Theorems 4–6.
 
 * `Goldfish.FastConfirmation.Spec4Delta` — abstract 4∆ protocol spec (`Spec4Δ`).

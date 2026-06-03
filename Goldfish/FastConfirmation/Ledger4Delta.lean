@@ -3,7 +3,7 @@ import Goldfish.Protocol
 /-!
 # Confirmed-ledger layer for the 4∆ regime (`Ledger4Δ`, `TxModel4Δ`)
 
-`Ledger4Δ` mirrors `Ledger` for the 4∆-slot regime of Track B.
+`Ledger4Δ` mirrors `Ledger` for `(1/2, 4∆)`-compliant fast-confirmation executions.
 `confirmed_of_stable` uses `fastVoteRound` and the `4∆(t+κ)+2∆` confirmation
 boundary. Safety (`Ledger4Δ.safe`) follows by the same proof as `Ledger.safe`.
 

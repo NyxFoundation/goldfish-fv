@@ -14,10 +14,11 @@ Two kinds of facts are declared (never proved with `sorry`):
   **Phase 2** issue (`phase2` label).
 
 * **External [61] results** — Neu–Tas–Tse accountability-gadget theorems used by
-  Track C. These cannot be *stated* faithfully until Track C's vocabulary (the
-  `chacc`/`chava` ledgers, partial synchrony, `GST`/`GAT`) is modelled, so they
-  are intentionally **not** declared here yet: declaring vacuous placeholders
-  would be dishonest. They will be added alongside the Track C base types. See
+  the partial-synchrony / ebb-and-flow proofs (Thm. 7, Lem. 6–9, Prop. 2–5).
+  These cannot be *stated* faithfully until that section's vocabulary (the
+  `ch_acc`/`ch_ava` ledgers, partial synchrony, `GST`/`GAT`) is modelled, so
+  they are intentionally **not** declared here yet: declaring vacuous placeholders
+  would be dishonest. They will be added alongside those base types. See
   `docs/formalization-strategy.md` §"External reference [61]".
 -/
 
@@ -54,8 +55,8 @@ axiom lemma1 (E : Execution Block Validator) {ε : ℝ} {n₀ κ : ℕ}
 
 /-! ## Lemma 4 — VRF lottery good event under `(1/2, 4∆)`-compliance
 
-The `4∆`-regime analogue of Lemma 1 (same conclusion shape; the slot→round
-timing differs, modelled when Track B's `4∆` slot structure is introduced).
+The `(1/2, 4∆)`-compliance analogue of Lemma 1 for the fast-confirmation
+proofs (same conclusion shape; the slot→round timing uses `4∆` instead of `3∆`).
 Phase 1 axiom; Phase 2 proof tracked separately. -/
 
 /-- **Lemma 4** (IACR 2022/1171, Lem. 4). For a `(1/2, 4∆)`-compliant execution,
