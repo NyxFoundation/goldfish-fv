@@ -3,6 +3,7 @@ import Goldfish.Protocol
 import Goldfish.Axioms
 import Goldfish.Ledger
 import Goldfish.SynchronousSecurity
+import Goldfish.FastConfirmation
 
 /-!
 # Goldfish

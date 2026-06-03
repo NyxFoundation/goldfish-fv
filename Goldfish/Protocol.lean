@@ -64,17 +64,29 @@ structure Execution (Block Validator : Type*) [BlockTree Block] where
   block conflicting with `B`. This is the GHOST-Eph majority condition of
   Alg. 3, l. 7, kept abstract here. -/
   outvotes : Validator → Round → Slot → Block → Prop
+  /-- `fastConfirms id t B`: validator `id` fast confirms block `B` at slot `t`
+  (Alg. 4, l. 9): it observed more than `(3/4 + ε/2)·n·thr_v` slot-`t` votes
+  for `B` in its buffer at round `4∆t + 2∆`. -/
+  fastConfirms : Validator → Slot → Block → Prop
 
 namespace Execution
 
 variable {Block Validator : Type*} [BlockTree Block] (E : Execution Block Validator)
 
-/-- First round of slot `t`: `3∆t`. -/
+/-- First round of slot `t` (3∆ regime): `3∆t`. -/
 def slotStart (t : Slot) : Round := 3 * E.Δ * t
 
-/-- Vote round of slot `t`: `3∆t + ∆`, when awake honest validators cast votes
-and the leader of slot `t` is recognized (Alg. 2, ll. 16, 22). -/
+/-- Vote round of slot `t` (3∆ regime): `3∆t + ∆`. -/
 def voteRound (t : Slot) : Round := 3 * E.Δ * t + E.Δ
+
+/-- First round of slot `t` in the 4∆ regime: `4∆t`. -/
+def fastSlotStart (t : Slot) : Round := 4 * E.Δ * t
+
+/-- Vote round of slot `t` in the 4∆ regime: `4∆t + ∆`. -/
+def fastVoteRound (t : Slot) : Round := 4 * E.Δ * t + E.Δ
+
+/-- Fast-confirmation round of slot `t`: `4∆t + 2∆`. -/
+def fastConfirmRound (t : Slot) : Round := 4 * E.Δ * t + 2 * E.Δ
 
 /-- `id` is awake and honest at round `r`. -/
 def awakeHonest (id : Validator) (r : Round) : Prop := E.awake id r ∧ E.honestAt id r
