@@ -1,5 +1,5 @@
 import Goldfish.FastConfirmation.Theorem4
-import Goldfish.FastConfirmation.FastLedger
+import Goldfish.FastConfirmation.Ledger4Delta
 
 /-!
 # Theorem 6 — liveness with fast confirmations, `Tconf = Θ(κ)`
@@ -16,11 +16,11 @@ import Goldfish.FastConfirmation.FastLedger
 `HonestLeaderEveryWindow` supplies a recognized honest leader `lead'` in every
 κ-window; every honest eligible voter votes for `P*.B'` by leader recognition +
 voting rule; that block is stable by induction (from `all_fast_votes_from_leader`)
-and hence confirmed in the `FastLedger` by round `4∆(s+κ)+2∆ ≤ r + (2κ+2)·4∆`.
+and hence confirmed in the `Ledger4Δ` by round `4∆(s+κ)+2∆ ≤ r + (2κ+2)·4∆`.
 
 **Fast confirmation under optimistic conditions**: Lemma 2's 4∆ analogue
 (`lemma2_fast`) shows all honest eligible voters voted for `P*.B`; then
-`FastSpec.confirms_of_honest_votes` delivers the fast-confirmation conclusion.
+`Spec4Δ.confirms_of_honest_votes` delivers the fast-confirmation conclusion.
 No `sorry`.
 -/
 
@@ -48,7 +48,7 @@ private theorem fast_live_arith {d r r' t κ Δ : ℕ} (hdpos : 0 < d) (hd : d =
 
 /-- 4∆ analogue of Lemma 2: if `lead` is the recognized leader of slot `t`, every
 honest eligible voter at `fastVoteRound t` votes for `proposalBlock lead t`. -/
-private theorem lemma2_fast (FS : FastSpec E) {lead id : Validator} {t : Slot}
+private theorem lemma2_fast (FS : Spec4Δ E) {lead id : Validator} {t : Slot}
     (hlead : E.leader lead t)
     (hawake : E.awakeHonest id (E.fastVoteRound t))
     (helig : E.eligibleVote id t) :
@@ -59,7 +59,7 @@ private theorem lemma2_fast (FS : FastSpec E) {lead id : Validator} {t : Slot}
 /-- Stability of an honest leader's block from the 4∆ vote rounds — the inductive
 analogue of `all_votes_descendant` but for leader-based (not fast-confirm-based)
 base case. Used for liveness. -/
-private theorem all_fast_votes_from_leader (FS : FastSpec E) {lead : Validator} {t : Slot}
+private theorem all_fast_votes_from_leader (FS : Spec4Δ E) {lead : Validator} {t : Slot}
     (hmaj : HonestMajorityPerSlot E) (hlead : E.leader lead t) :
     ∀ t' : Slot, t ≤ t' → ∀ id : Validator,
       E.awakeHonest id (E.fastVoteRound t') → E.eligibleVote id t' →
@@ -77,11 +77,11 @@ private theorem all_fast_votes_from_leader (FS : FastSpec E) {lead : Validator} 
 /-- **Theorem 6.**
 1. **Liveness**: under `HonestMajorityPerSlot` and `HonestLeaderEveryWindow`,
    a transaction received by round `r` is in every awake honest validator's
-   `FastLedger` from round `r + (2κ+2)·4∆` onward.
+   `Ledger4Δ` from round `r + (2κ+2)·4∆` onward.
 2. **Optimistic fast confirmation**: if an honest leader `lead` is recognized at
    slot `t` and all awake honest validators are eligible to vote at `t`, then
    every validator awake at `fastConfirmRound t` fast confirms `P*.B`. -/
-theorem theorem6 (FS : FastSpec E) (FL : FastLedger E κ) (TX : FastTxModel E)
+theorem theorem6 (FS : Spec4Δ E) (FL : Ledger4Δ E κ) (TX : TxModel4Δ E)
     (hmaj : HonestMajorityPerSlot E) (hwin : HonestLeaderEveryWindow E κ)
     {lead : Validator} {t : Slot}
     (hlead : E.leader lead t)

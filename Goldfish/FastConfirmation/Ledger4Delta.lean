@@ -1,13 +1,13 @@
 import Goldfish.Protocol
 
 /-!
-# Fast-confirmation ledger layer (4∆ regime)
+# Confirmed-ledger layer for the 4∆ regime (`Ledger4Δ`, `TxModel4Δ`)
 
-`FastLedger` mirrors `Ledger` for the 4∆-slot regime of Track B.
+`Ledger4Δ` mirrors `Ledger` for the 4∆-slot regime of Track B.
 `confirmed_of_stable` uses `fastVoteRound` and the `4∆(t+κ)+2∆` confirmation
-boundary. Safety (`FastLedger.safe`) follows by the same proof as `Ledger.safe`.
+boundary. Safety (`Ledger4Δ.safe`) follows by the same proof as `Ledger.safe`.
 
-`FastTxModel` is the transaction model for the 4∆ regime: `leader_includes` uses
+`TxModel4Δ` is the transaction model for the 4∆ regime: `leader_includes` uses
 `fastSlotStart` instead of `slotStart`.
 -/
 
@@ -16,7 +16,7 @@ namespace Goldfish
 variable {Block Validator : Type*} [BlockTree Block]
 
 /-- Confirmed-ledger assignment for the `(1/2, 4∆)` regime at depth `κ`. -/
-structure FastLedger (E : Execution Block Validator) (κ : ℕ) where
+structure Ledger4Δ (E : Execution Block Validator) (κ : ℕ) where
   /-- `ch^id_r`: ledger output by `id` at round `r`. -/
   chain : Validator → Round → Block
   /-- **κ-deep confirmation (4∆ regime)**. If `B` is a stable prefix of the
@@ -41,30 +41,30 @@ structure FastLedger (E : Execution Block Validator) (κ : ℕ) where
       E.awakeHonest id r → E.awakeHonest id' r' →
         chain id r ≤ E.forkChoice id' r'
 
-namespace FastLedger
+namespace Ledger4Δ
 
 variable {E : Execution Block Validator} {κ : ℕ}
 
 /-- **Safety** (Def. 1 in the 4∆ regime). Any two ledgers output by awake honest
 validators are consistent. -/
-def Safe (FL : FastLedger E κ) : Prop :=
+def Safe (L : Ledger4Δ E κ) : Prop :=
   ∀ {r r' : Round} {id id' : Validator},
     E.awakeHonest id r → E.awakeHonest id' r' →
-      BlockTree.Consistent (FL.chain id r) (FL.chain id' r')
+      BlockTree.Consistent (L.chain id r) (L.chain id' r')
 
-/-- Safety holds for every `FastLedger` assignment — same proof as `Ledger.safe`. -/
-theorem safe (FL : FastLedger E κ) : FL.Safe := by
+/-- Safety holds for every `Ledger4Δ` assignment — same proof as `Ledger.safe`. -/
+theorem safe (L : Ledger4Δ E κ) : L.Safe := by
   intro r r' id id' h h'
   rcases le_total r r' with hrr | hrr
   · exact BlockTree.consistent_of_le_of_le
-      (FL.confirmed_persists hrr h h') (FL.chain_le_forkChoice h')
+      (L.confirmed_persists hrr h h') (L.chain_le_forkChoice h')
   · exact (BlockTree.consistent_of_le_of_le
-      (FL.confirmed_persists hrr h' h) (FL.chain_le_forkChoice h)).symm
+      (L.confirmed_persists hrr h' h) (L.chain_le_forkChoice h)).symm
 
-end FastLedger
+end Ledger4Δ
 
 /-- Transaction model for the 4∆ regime. `leader_includes` uses `fastSlotStart`. -/
-structure FastTxModel (E : Execution Block Validator) where
+structure TxModel4Δ (E : Execution Block Validator) where
   /-- Transactions. -/
   Tx : Type*
   /-- `mem tx B`: `tx` is included in the chain ending at `B`. -/
@@ -82,10 +82,10 @@ structure FastTxModel (E : Execution Block Validator) where
         mem tx (E.proposalBlock lead t)
 
 /-- **Liveness** with confirmation time `Tconf` (rounds) in the 4∆ regime. -/
-def FastTxModel.Live {E : Execution Block Validator} {κ : ℕ}
-    (TX : FastTxModel E) (FL : FastLedger E κ) (Tconf : ℕ) : Prop :=
+def TxModel4Δ.Live {E : Execution Block Validator} {κ : ℕ}
+    (TX : TxModel4Δ E) (L : Ledger4Δ E κ) (Tconf : ℕ) : Prop :=
   ∀ {tx : TX.Tx} {r : Round}, TX.received tx r →
     ∀ {r' : Round} {id : Validator}, r + Tconf ≤ r' → E.awakeHonest id r' →
-      TX.mem tx (FL.chain id r')
+      TX.mem tx (L.chain id r')
 
 end Goldfish

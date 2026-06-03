@@ -2,10 +2,10 @@ import Goldfish.Protocol
 import Goldfish.Axioms
 
 /-!
-# Fast-confirmation abstract spec (4∆ regime)
+# Abstract spec for the 4∆ regime (`Spec4Δ`)
 
-`FastSpec` is the analogue of `Spec` for the `(1/2, 4∆)`-compliance regime of
-Track B. It adds four 4∆-specific protocol mechanics on top of the
+`Spec4Δ` is the analogue of `Spec` for the `(1/2, 4∆)`-compliance regime of
+Track B. It adds 4∆-specific protocol mechanics on top of the
 timing-independent `forkChoice_of_outvotes` (shared with `Spec`):
 
 * `fast_vote_forkChoice` — voting rule at `fastVoteRound`
@@ -22,8 +22,8 @@ timing-independent `forkChoice_of_outvotes` (shared with `Spec`):
 
 namespace Goldfish
 
-/-- Abstract specification for the 4∆-regime fast-confirmation protocol. -/
-structure FastSpec {Block Validator : Type*} [BlockTree Block]
+/-- Abstract specification for the 4∆-regime protocol. -/
+structure Spec4Δ {Block Validator : Type*} [BlockTree Block]
     (E : Execution Block Validator) : Prop where
   /-- **GHOST-Eph engine** (Alg. 3, l. 7) — timing-independent: if `id`'s view
   at any round `r` shows `B`'s descendants outvoting every conflicting block,

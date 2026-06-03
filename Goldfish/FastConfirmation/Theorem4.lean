@@ -9,7 +9,7 @@ import Goldfish.FastConfirmation.Lemma5
 > ll. 8, 22, 28 by any awake honest validator at any round `r ≥ 4∆(t+1)+∆`.
 
 The proof mirrors Theorem 1. **Base case**: Lemma 5 provides the slot `t+1`
-voting claim. **Inductive step**: `FastSpec.fast_outvotes_of_honest_majority`
+voting claim. **Inductive step**: `Spec4Δ.fast_outvotes_of_honest_majority`
 (the 4∆ analogue of Lemma 3's persistence argument) propagates the vote claim
 one slot forward. The helper `all_votes_fast` proves by induction that for all
 `t' ≥ t+1` every honest eligible voter votes for a descendant of `B`. Theorem 4
@@ -24,7 +24,7 @@ variable {Block Validator : Type*} [BlockTree Block] {E : Execution Block Valida
 /-- Induction workhorse: from Lemma 5 (base) and `fast_outvotes_of_honest_majority`
 (step), for all `t' ≥ t+1` every awake honest eligible voter votes for a
 descendant of `B`. -/
-private theorem all_votes_fast (FS : FastSpec E) {idc : Validator} {t : Slot} {B : Block}
+private theorem all_votes_fast (FS : Spec4Δ E) {idc : Validator} {t : Slot} {B : Block}
     (hmaj : HonestMajorityPerSlot E)
     (hfc : E.fastConfirms idc t B) :
     ∀ t' : Slot, t + 1 ≤ t' → ∀ id : Validator,
@@ -41,7 +41,7 @@ private theorem all_votes_fast (FS : FastSpec E) {idc : Validator} {t : Slot} {B
 /-- **Theorem 4.** Given `HonestMajorityPerSlot` (Lemma 4's good event), if
 `idc` fast confirmed `B` at slot `t`, then `B` is a prefix of the fork choice
 of every awake honest eligible voter at `fastVoteRound t'` for every `t' > t`. -/
-theorem theorem4 (FS : FastSpec E) {idc : Validator} {t : Slot} {B : Block}
+theorem theorem4 (FS : Spec4Δ E) {idc : Validator} {t : Slot} {B : Block}
     (hmaj : HonestMajorityPerSlot E)
     (hfc : E.fastConfirms idc t B) :
     ∀ t' : Slot, t < t' → ∀ id : Validator,

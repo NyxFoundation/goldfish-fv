@@ -1,4 +1,4 @@
-import Goldfish.FastConfirmation.FastSpec
+import Goldfish.FastConfirmation.Spec4Delta
 
 /-!
 # Lemma 5 — fast-confirmed block ⇒ honest validators vote for a descendant next slot
@@ -11,7 +11,7 @@ import Goldfish.FastConfirmation.FastSpec
 
 The fast-confirmation broadcast at round `4∆t+2∆` reaches every honest validator
 by `4∆(t+1)+∆` (synchrony). By the `outvotes_of_fast_confirm` mechanic in
-`FastSpec`, any honest eligible voter at `fastVoteRound (t+1)` sees `B`'s
+`Spec4Δ`, any honest eligible voter at `fastVoteRound (t+1)` sees `B`'s
 descendants outvote conflicting blocks; the voting rule then delivers the
 `votesForDescendant` conclusion. No `sorry`.
 -/
@@ -23,7 +23,7 @@ variable {Block Validator : Type*} [BlockTree Block] {E : Execution Block Valida
 /-- **Lemma 5.** If `idc` fast confirmed `B` at slot `t`, then every honest
 validator awake and eligible at `fastVoteRound (t+1)` votes for a descendant
 of `B`. -/
-theorem lemma5 (FS : FastSpec E) {idc id : Validator} {t : Slot} {B : Block}
+theorem lemma5 (FS : Spec4Δ E) {idc id : Validator} {t : Slot} {B : Block}
     (hfc : E.fastConfirms idc t B)
     (hawake : E.awakeHonest id (E.fastVoteRound (t + 1)))
     (helig : E.eligibleVote id (t + 1)) :
