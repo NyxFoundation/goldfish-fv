@@ -53,6 +53,17 @@ axiom proposition5 (G : Gadget E) :
       G.checkpointed id r B → G.checkpointed id r' B' →
       r ≤ r' → r' < r + G.Tchkpt → B = B'
 
+/-! ## [61, Prop. 3] — BFT-overlay agreement (safety + synchronous delivery)
+
+The safety of the BFT overlay (`f < n/3`) together with synchronous message
+delivery after `max(GST, GAT)`: accepting gadget votes that appear in one honest
+validator's `LOG_bft` by round `r` appear in *every* honest validator's
+`LOG_bft` by round `max(max(GST, GAT), r) + ∆`. This is the [61, Prop. 3] content
+the Goldfish paper imports to prove iteration synchronization (Proposition 4). -/
+axiom ext61_bftAgreement (G : Gadget E) :
+    ∀ {B : Block} {c : ℕ} {r : Round}, G.acceptingVotes B c r →
+      G.acceptingVotes B c (max G.maxGAS r + E.Δ)
+
 /-! ## [61, Thm. 3] — accountable safety of `ch_acc`
 
 > By [61, Thm. 3], `ch_acc` provides accountable safety with resilience `n/3`
