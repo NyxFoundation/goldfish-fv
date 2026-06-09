@@ -73,4 +73,16 @@ Used by Lemma 9 and Theorem 7 (the `P1` safety clause). Stated as safety of
 `ch_acc` at all rounds. -/
 axiom ext61_accountableSafety (G : Gadget E) : G.SafeAfter G.chacc 0
 
+/-! ## [61, Thm. 4] — no two honest-observed checkpoints conflict
+
+> As the execution is `(1/3, 3∆)`-compliant, w.o.p. no two checkpoints observed
+> by awake honest validators conflict (used in the proof of Lemma 7 / Lemma 9).
+
+The accountable-safety consequence specialised to checkpoints: any two blocks
+checkpointed in awake honest views are consistent (one is a prefix of the
+other). -/
+axiom ext61_checkpointsConsistent (G : Gadget E) :
+    ∀ {id id' : Validator} {r r' : Round} {B B' : Block},
+      G.checkpointed id r B → G.checkpointed id' r' B' → BlockTree.Consistent B B'
+
 end Goldfish
