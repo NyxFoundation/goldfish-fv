@@ -90,25 +90,28 @@ fork-choice / slot / voting behaviour as an **abstract interface (a structure or
 typeclass of hypotheses)** and derive the theorems from it. An executable model
 can replace the interface later without changing the theorem statements.
 
-### 4. Track C cyclic dependency
+### 4. Ebb-and-flow cyclic dependency
 
-In Track C the proof dependencies form a cycle: **Lemma 7 → Lemma 9 → Lemma 8 →
-Lemma 7** (the healing argument is a mutual induction).
+In the partial-synchrony / ebb-and-flow proofs the dependencies form a cycle:
+**Lemma 7 → Lemma 9 → Lemma 8 → Lemma 7** (the healing argument is a mutual
+induction).
 
 **Decision.** Prove the three as one simultaneous induction and close them
 together from a single PR. Their DoD omits the "all dependency issues closed"
 requirement *for the in-bundle edges*; out-of-bundle dependencies (Lemma 1,
 Proposition 4, Propositions 3/5, the [61] axioms) must still be resolved.
 
-## Track structure and dependency graph
+## Proof layers and dependency graph
 
-Three layers, built in order. Track A is self-contained; B and C depend on A.
+Three layers, built in order. The synchronous-security layer is self-contained;
+fast confirmation and partial synchrony / ebb-and-flow each depend on it.
 
-- **Track A — synchronous core:** Thm 1–3, Lem 1–3. Reorg resilience + security
-  under `(1/2, 3∆)`-compliance.
-- **Track B — fast confirmation:** Thm 4–6, Lem 4–5, Prop 1. `(1/2, 4∆)`.
-- **Track C — partial synchrony / ebb-and-flow:** Thm 7, Lem 6–9, Prop 2–5.
-  `(1/3, 3∆)`, accountability gadget overlay.
+- **Synchronous security** (`Goldfish.SynchronousSecurity`): Thm 1–3, Lem 1–3.
+  Reorg resilience + security under `(1/2, 3∆)`-compliance.
+- **Fast confirmation** (`Goldfish.FastConfirmation`): Thm 4–6, Lem 4–5, Prop 1.
+  `(1/2, 4∆)`-compliance.
+- **Partial synchrony / ebb-and-flow** (`Goldfish.EbbAndFlow`): Thm 7, Lem 6–9,
+  Prop 2–5. `(1/3, 3∆)`-compliance, accountability gadget overlay.
 
 Dependency adjacency list (`X ← {…}` means X's proof depends on …; `[61,*]`
 are external axioms):
@@ -160,10 +163,11 @@ statements.
 
 **External [61] axioms deferred.** `[61, Thm 3]`, `[61, Thm 4]`, `[61, Prop 2/3/4]`
 are **not** declared in `Goldfish/Axioms.lean` yet. They cannot be *stated*
-faithfully before Track C's vocabulary (the `chacc`/`chava` ledgers, partial
-synchrony, `GST`/`GAT`) exists, and declaring vacuous placeholders would violate
-the no-placeholder discipline. They are introduced together with the Track C base
-types, each with a source comment.
+faithfully before the partial-synchrony / ebb-and-flow vocabulary (the
+`ch_acc`/`ch_ava` ledgers, `GST`/`GAT`) exists, and declaring vacuous
+placeholders would violate the no-placeholder discipline. They are introduced
+together with those base types in `Goldfish/EbbAndFlow/`, each with a source
+comment.
 
 Reference pattern for project layout: [`Koukyosyumei/PoL`](https://github.com/Koukyosyumei/PoL)
 (Apache-2.0, Lake, `Consensus/` module layout).
