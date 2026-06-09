@@ -4,6 +4,7 @@ import Goldfish.Axioms
 import Goldfish.Ledger
 import Goldfish.SynchronousSecurity
 import Goldfish.FastConfirmation
+import Goldfish.EbbAndFlow
 
 /-!
 # Goldfish
@@ -19,4 +20,8 @@ graph; each numbered statement is tracked by a GitHub issue.
 * `Goldfish.Ledger` — the confirmed-ledger layer (`ch^id_r`, Def. 1 safety/liveness).
 * `Goldfish.SynchronousSecurity` — synchronous security, paper App. B: Lem. 2–3,
   Thm. 1–3 under `(1/2, 3∆)`-compliance.
+* `Goldfish.FastConfirmation` — fast confirmation, paper App. C: Lem. 5, Thm. 4–6
+  under `(1/2, 4∆)`-compliance.
+* `Goldfish.EbbAndFlow` — partial synchrony / ebb-and-flow, paper App. D: Prop. 2–5,
+  Lem. 6–9, Thm. 7 under `(1/3, 3∆)`-compliance with the accountability gadget.
 -/
