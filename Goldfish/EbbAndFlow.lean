@@ -1,6 +1,7 @@
 import Goldfish.EbbAndFlow.Basic
 import Goldfish.EbbAndFlow.GadgetSpec
 import Goldfish.EbbAndFlow.External
+import Goldfish.EbbAndFlow.Proposition2
 import Goldfish.EbbAndFlow.Proposition4
 
 /-!
