@@ -5,6 +5,7 @@ import Goldfish.Ledger
 import Goldfish.SynchronousSecurity
 import Goldfish.FastConfirmation
 import Goldfish.EbbAndFlow
+import Goldfish.Probabilistic
 
 /-!
 # Goldfish
@@ -24,4 +25,7 @@ graph; each numbered statement is tracked by a GitHub issue.
   under `(1/2, 4∆)`-compliance.
 * `Goldfish.EbbAndFlow` — partial synchrony / ebb-and-flow, paper App. D: Prop. 2–5,
   Lem. 6–9, Thm. 7 under `(1/3, 3∆)`-compliance with the accountability gadget.
+* `Goldfish.Probabilistic` — measure-theoretic foundation (paper App. G) for the
+  Phase-2 replacement of the good-event axioms: the `Lottery` model and the
+  Chernoff/Hoeffding honest-majority concentration bound.
 -/
