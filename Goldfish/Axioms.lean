@@ -17,8 +17,8 @@ Two kinds of facts are declared (never proved with `sorry`):
   the partial-synchrony / ebb-and-flow proofs (Thm. 7, Lem. 6–9, Prop. 2–5).
   These cannot be *stated* faithfully until that section's vocabulary (the
   `ch_acc`/`ch_ava` ledgers, partial synchrony, `GST`/`GAT`) is modelled, so
-  they are intentionally **not** declared here yet: declaring vacuous placeholders
-  would be dishonest. They will be added alongside those base types. See
+  they are declared in `Goldfish.EbbAndFlow.External` over the `Gadget`
+  interface — alongside those base types — rather than here. See
   `docs/formalization-strategy.md` §"External reference [61]".
 -/
 
