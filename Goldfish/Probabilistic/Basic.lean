@@ -85,6 +85,54 @@ theorem honest_majority_bound (t : Slot) :
   HasSubgaussianMGF.measureReal_le_le_exp (L.hon_subG t) (L.adv_subG t)
     (L.indep t) (le_of_lt (L.mean_gap t))
 
+/-- **Union bound over a slot horizon (step (ii) toward Lemma 1).** The
+probability that the adversary attains an eligible-voter majority in *some* slot
+of a finite horizon `H` is at most the sum of the per-slot Chernoff bounds.
+
+Combined with `honest_majority_bound`, this is the union-bound half of the
+`w.o.p.` argument: it turns the per-slot exponential decay into a bound on the
+failure of `HonestMajorityPerSlot` over the whole (polynomially-sized) horizon. -/
+theorem honest_majority_union_bound (H : Finset Slot) :
+    μ.real {ω | ∃ t ∈ H, L.honCount t ω ≤ L.advCount t ω} ≤
+      ∑ t ∈ H, exp (-((∫ ω, L.advCount t ω ∂μ) - ∫ ω, L.honCount t ω ∂μ) ^ 2
+        / (2 * (L.cHon + L.cAdv))) := by
+  have hset : {ω | ∃ t ∈ H, L.honCount t ω ≤ L.advCount t ω}
+      = ⋃ t ∈ H, {ω | L.honCount t ω ≤ L.advCount t ω} := by
+    ext ω; simp
+  rw [hset]
+  exact (measureReal_biUnion_finset_le H _).trans
+    (Finset.sum_le_sum fun t _ => L.honest_majority_bound t)
+
+/-- **Uniform horizon bound (step (ii), packaged form).** If every slot in the
+horizon `H` enjoys at least a mean gap `g ≥ 0` between the expected honest and
+adversary counts, the failure probability is at most `|H| · exp(−g² / (2c))`,
+with `c = cHon + cAdv > 0`. As `g` grows like the security parameter and `|H|`
+stays polynomial, this lands in `Negligible` — the shape Lemma 1's `w.o.p.`
+claim requires. -/
+theorem honest_majority_uniform_bound (H : Finset Slot) {g : ℝ} (hg : 0 ≤ g)
+    (hc : 0 < (L.cHon + L.cAdv : ℝ))
+    (hgap : ∀ t ∈ H, g ≤ (∫ ω, L.honCount t ω ∂μ) - ∫ ω, L.advCount t ω ∂μ) :
+    μ.real {ω | ∃ t ∈ H, L.honCount t ω ≤ L.advCount t ω} ≤
+      H.card * exp (-g ^ 2 / (2 * (L.cHon + L.cAdv))) := by
+  refine (L.honest_majority_union_bound H).trans ?_
+  have hc2 : (0 : ℝ) < 2 * (L.cHon + L.cAdv) := by linarith
+  calc ∑ t ∈ H, exp (-((∫ ω, L.advCount t ω ∂μ) - ∫ ω, L.honCount t ω ∂μ) ^ 2
+            / (2 * (L.cHon + L.cAdv)))
+      ≤ ∑ _t ∈ H, exp (-g ^ 2 / (2 * (L.cHon + L.cAdv))) := by
+        refine Finset.sum_le_sum fun t ht => ?_
+        have hsq : g ^ 2 ≤
+            ((∫ ω, L.advCount t ω ∂μ) - ∫ ω, L.honCount t ω ∂μ) ^ 2 := by
+          have hflip : ((∫ ω, L.advCount t ω ∂μ) - ∫ ω, L.honCount t ω ∂μ) ^ 2
+              = ((∫ ω, L.honCount t ω ∂μ) - ∫ ω, L.advCount t ω ∂μ) ^ 2 := by
+            ring
+          rw [hflip]
+          exact pow_le_pow_left₀ hg (hgap t ht) 2
+        refine Real.exp_le_exp.2 ?_
+        rw [neg_div, neg_div, neg_le_neg_iff, div_le_div_iff_of_pos_right hc2]
+        exact hsq
+  _ = H.card * exp (-g ^ 2 / (2 * (L.cHon + L.cAdv))) := by
+        rw [Finset.sum_const, nsmul_eq_mul]
+
 end Lottery
 
 end Goldfish
