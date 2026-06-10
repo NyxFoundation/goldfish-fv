@@ -34,5 +34,16 @@ structure GadgetSpec {Block Validator : Type*} [BlockTree Block]
   acceptingVotes_of_entersIter_succ :
     ∀ {c : ℕ} {r : Round} {id : Validator},
       G.entersIter id (c + 1) r → ∃ B : Block, G.acceptingVotes B c r
+  /-- **Checkpoints anchor to honest proposals** (Alg. 4, l. 9 + the κ-deep
+  confirmation rule). Honest validators send an accepting gadget vote only for a
+  block confirmed `κ` slots deep, and such a block lies in the prefix of the
+  block proposed by the recognized honest leader of its window (the honest leader
+  exists w.o.p. by Lemma 1). Hence every checkpointed block is a prefix of some
+  recognized leader's proposal `P*.B`. The *stability* of that proposal is then
+  supplied by Theorem 1, not by this field. -/
+  proposal_of_checkpointed :
+    ∀ {id : Validator} {r : Round} {B : Block},
+      G.checkpointed id r B →
+        ∃ (lead : Validator) (t : Slot), E.leader lead t ∧ B ≤ E.proposalBlock lead t
 
 end Goldfish
