@@ -4,6 +4,7 @@ import Goldfish.EbbAndFlow.External
 import Goldfish.EbbAndFlow.Proposition2
 import Goldfish.EbbAndFlow.Proposition4
 import Goldfish.EbbAndFlow.Lemma6
+import Goldfish.EbbAndFlow.Healing
 
 /-!
 # Partial synchrony / ebb-and-flow (paper App. D)
