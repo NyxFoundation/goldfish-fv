@@ -1,5 +1,7 @@
 import Goldfish.EbbAndFlow.Basic
+import Goldfish.EbbAndFlow.GadgetSpec
 import Goldfish.EbbAndFlow.External
+import Goldfish.EbbAndFlow.Proposition4
 
 /-!
 # Partial synchrony / ebb-and-flow (paper App. D)
