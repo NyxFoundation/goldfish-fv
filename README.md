@@ -49,30 +49,94 @@ Three layers, built in order. The synchronous-security layer is self-contained; 
 - **Fast confirmation** (`Goldfish.FastConfirmation`): Thm 4–6, Lem 4–5, Prop 1. `(1/2, 4∆)`-compliance.
 - **Partial synchrony / ebb-and-flow** (`Goldfish.EbbAndFlow`): Thm 7, Lem 6–9, Prop 2–5. `(1/3, 3∆)`-compliance, accountability gadget overlay.
 
-Dependency adjacency list (`X ← {…}` means X's proof depends on …; `[61,*]` are external axioms):
+Dependency graph (an arrow `A → B` means *A's proof depends on B*; `[61]` nodes are external axioms from ref [61]):
 
+```mermaid
+flowchart TD
+    subgraph SS["Synchronous security — (1/2, 3∆)"]
+        Thm1["Thm 1"]
+        Thm2["Thm 2"]
+        Thm3["Thm 3"]
+        Lem1["Lem 1"]
+        Lem2["Lem 2"]
+        Lem3["Lem 3"]
+    end
+
+    subgraph FC["Fast confirmation — (1/2, 4∆)"]
+        Thm4["Thm 4"]
+        Thm5["Thm 5"]
+        Thm6["Thm 6"]
+        Lem4["Lem 4"]
+        Lem5["Lem 5"]
+        Prop1["Prop 1"]
+    end
+
+    subgraph EF["Partial synchrony / ebb-and-flow — (1/3, 3∆)"]
+        Thm7["Thm 7"]
+        Lem6["Lem 6"]
+        Lem7["Lem 7"]
+        Lem8["Lem 8"]
+        Lem9["Lem 9"]
+        Prop2["Prop 2"]
+        Prop3["Prop 3"]
+        Prop4["Prop 4"]
+        Prop5["Prop 5"]
+    end
+
+    subgraph EXT["External axioms — ref [61]"]
+        E61Thm3["[61] Thm 3"]
+        E61Thm4["[61] Thm 4"]
+        E61Prop2["[61] Prop 2"]
+        E61Prop3["[61] Prop 3"]
+        E61Prop4["[61] Prop 4"]
+    end
+
+    %% A --> B reads "A's proof depends on B"
+    Thm1 --> Lem1
+    Thm1 --> Lem2
+    Thm1 --> Lem3
+    Thm2 --> Lem1
+    Thm2 --> Thm1
+    Thm3 --> Thm1
+    Thm4 --> Lem3
+    Thm4 --> Lem4
+    Thm4 --> Lem5
+    Thm5 --> Thm2
+    Thm5 --> Thm4
+    Thm6 --> Thm2
+    Thm6 --> Lem2
+    Thm7 --> Lem6
+    Thm7 --> Lem7
+    Thm7 --> Lem9
+    Thm7 --> E61Thm3
+    Lem3 --> Lem1
+    Lem5 --> Prop1
+    Lem6 --> Prop2
+    Lem6 --> Thm2
+    Lem7 --> Prop3
+    Lem7 --> Prop4
+    Lem7 --> Lem9
+    Lem7 --> E61Thm4
+    Lem8 --> Lem7
+    Lem9 --> Lem1
+    Lem9 --> Prop4
+    Lem9 --> Lem8
+    Lem9 --> Prop5
+    Lem9 --> E61Thm3
+    Prop2 --> Lem1
+    Prop2 --> Thm1
+    Prop3 --> E61Prop2
+    Prop4 --> E61Prop3
+    Prop5 --> E61Prop4
+
+    classDef prob fill:#fde68a,stroke:#b45309,color:#000;
+    classDef noproof fill:#fed7aa,stroke:#c2410c,color:#000;
+    classDef ext fill:#e0e7ff,stroke:#4338ca,color:#000;
+    classDef cyclic stroke:#dc2626,stroke-width:2px,stroke-dasharray:5 3;
+    class Lem1,Lem4,Prop1 prob;
+    class Prop3,Prop5 noproof;
+    class E61Thm3,E61Thm4,E61Prop2,E61Prop3,E61Prop4 ext;
+    class Lem7,Lem8,Lem9 cyclic;
 ```
-Thm1 ← {Lem1, Lem2, Lem3}
-Thm2 ← {Lem1, Thm1}
-Thm3 ← {Thm1}
-Thm4 ← {Lem3, Lem4, Lem5}
-Thm5 ← {Thm2, Thm4}
-Thm6 ← {Thm2, Lem2}
-Thm7 ← {Lem6, Lem7, Lem9, [61,Thm3]}
 
-Lem1 ← {}              (axiom; probabilistic)
-Lem2 ← {}              (deterministic)
-Lem3 ← {Lem1}
-Lem4 ← {}              (axiom; probabilistic)
-Lem5 ← {Prop1}
-Lem6 ← {Prop2, Thm2}
-Lem7 ← {Prop3, Prop4, Lem9, [61,Thm4]}     ┐
-Lem8 ← {Lem7}                               │ cyclic bundle
-Lem9 ← {Lem1, Prop4, Lem8, Prop5, [61,Thm3]}┘
-
-Prop1 ← {}             (axiom; probabilistic)
-Prop2 ← {Lem1, Thm1}
-Prop3 ← {[61,Prop2]}   (axiom; no paper proof)
-Prop4 ← {[61,Prop3]}
-Prop5 ← {[61,Prop4]}   (axiom; no paper proof)
-```
+Legend: amber = axiom assumed `w.o.p.` (Lem 1, Lem 4, Prop 1 — VRF lottery + Chernoff); orange = axiom with no paper proof, taken as the [61] analogue (Prop 3, Prop 5); indigo = external [61] axiom; red dashed border = the Lem 7 → Lem 9 → Lem 8 → Lem 7 cyclic bundle proved by one simultaneous induction. Lem 2 is deterministic with no dependencies.
