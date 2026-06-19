@@ -1,6 +1,6 @@
 # goldfish-fv
 
-A Lean 4 formalization of the **Goldfish** Ethereum consensus protocol (IACR ePrint 2022/1171). The paper's 21 numbered statements (Theorem 1–7, Lemma 1–9, Proposition 1–5) are each tracked by a GitHub issue, and this README is the cross-cutting reference those issues link back to: the proof discipline, the barriers and the decision for each, the dependency graph, and the Lean module layout.
+A Lean 4 formalization of the **Goldfish** Ethereum consensus protocol (IACR ePrint 2022/1171). The paper's 21 numbered statements (Theorem 1–7, Lemma 1–9, Proposition 1–5) are formalized here. This README documents the proof discipline, the barriers and the decision for each, the dependency graph, and the Lean module layout.
 Build toward a machine-checked formalization of the Goldfish safety and liveness results, using the paper's numbered statements as the specification target.
 
 ## Source
@@ -43,7 +43,7 @@ theorem goldfish_security
   ...  -- fully discharged
 ```
 
-The probabilistic fact "the good event holds with overwhelming probability" is isolated into Lemma 1/4 and Proposition 1, declared as `axiom` for now (see below), and proved later via measure theory in a dedicated Phase 2 issue.
+The probabilistic fact "the good event holds with overwhelming probability" is isolated into Lemma 1/4 and Proposition 1, declared as `axiom` for now (see below), and replaced later by a separate measure-theoretic proof.
 
 ## Barriers and decisions
 
@@ -53,25 +53,25 @@ The probabilistic fact "the good event holds with overwhelming probability" is i
 
 Concentration inequalities (Chernoff/Hoeffding) are **not in core Mathlib**; they exist only in specialized libraries (e.g. `lean-stat-learning-theory`). Proving them from measure theory is research-level work.
 
-**Decision.** Thread the good event as a hypothesis into the deterministic theorems (fully proved). Declare Lemma 1 / Lemma 4 / Proposition 1 as `axiom` (label `needs-axiom`). A statement issue closes at **Phase 1** — the axiom is declared and dependents can proceed. The measure-theoretic proof that replaces the axiom is tracked in a separate **Phase 2 follow-up issue** (label `phase2`), so it never blocks dependency closure.
+**Decision.** Thread the good event as a hypothesis into the deterministic theorems (fully proved), and declare Lemma 1 / Lemma 4 / Proposition 1 as `axiom`. Dependents can then proceed immediately. The measure-theoretic proof that replaces each axiom is developed separately, so it never blocks the deterministic proofs.
 
 ### 2. External reference [61] (Ebb-and-Flow)
 
 Theorem 7, Lemma 7, Lemma 9 and Propositions 3–5 rely on results from the accountability-gadget paper [61] (Neu, Tas, Tse — *The Availability-Accountability Dilemma and its Resolution via Accountability Gadgets*, [ePrint 2021/628](https://eprint.iacr.org/2021/628) / [arXiv:2105.06075](https://arxiv.org/abs/2105.06075)). Goldfish's Lemmas 7–9 and Propositions 3–5 are stated as analogues of that paper's Thm 4 / Lem 1 / Thm 5 and Prop 2 / 3 / 4. Formalizing [61] is out of scope.
 
-**Decision.** Declare each imported [61] result as an `axiom` with a source comment in a central module (see Module layout). Statements whose proof depends on those axioms carry the `external-ref` label.
+**Decision.** Declare each imported [61] result as an `axiom` with a source comment in a central module (see Module layout).
 
 ### 3. Protocol mechanics (GHOST-Eph, slots, voting)
 
 The formalization deliberately omits Algorithms 1–6, but the theorem statements need the fork-choice rule, slot structure and voting behaviour.
 
-**Decision (MVP).** Do not implement the algorithms operationally. Provide fork-choice / slot / voting behaviour as an **abstract interface (a structure or typeclass of hypotheses)** and derive the theorems from it. An executable model can replace the interface later without changing the theorem statements.
+**Decision.** Do not implement the algorithms operationally. Provide fork-choice / slot / voting behaviour as an **abstract interface (a structure or typeclass of hypotheses)** and derive the theorems from it. An executable model can replace the interface later without changing the theorem statements.
 
 ### 4. Ebb-and-flow cyclic dependency
 
 In the partial-synchrony / ebb-and-flow proofs the dependencies form a cycle: **Lemma 7 → Lemma 9 → Lemma 8 → Lemma 7** (the healing argument is a mutual induction).
 
-**Decision.** Prove the three as one simultaneous induction and close them together from a single PR. Their DoD omits the "all dependency issues closed" requirement *for the in-bundle edges*; out-of-bundle dependencies (Lemma 1, Proposition 4, Propositions 3/5, the [61] axioms) must still be resolved.
+**Decision.** Prove the three together as one simultaneous induction. The cyclic dependencies among them are discharged by the joint induction rather than one at a time; the out-of-bundle dependencies (Lemma 1, Proposition 4, Propositions 3/5, the [61] axioms) must still be resolved separately.
 
 ## Proof layers and dependency graph
 
@@ -111,7 +111,7 @@ Prop5 ← {[61,Prop4]}   (axiom; no paper proof)
 
 ## Module layout
 
-These modules are prerequisite scaffolding assumed by every statement issue (not tracked by per-statement issues):
+These modules are prerequisite scaffolding assumed by every numbered statement:
 
 | Path | Contents |
 |---|---|

@@ -13,7 +13,7 @@ import Goldfish.Probabilistic
 Machine-checked formalization of the *Goldfish* Ethereum consensus protocol
 (IACR ePrint 2022/1171). See `README.md` for the proof
 discipline (`axiom` / hypothesis threading, never `sorry`) and the dependency
-graph; each numbered statement is tracked by a GitHub issue.
+graph.
 
 * `Goldfish.Basic` — block-tree prefix order, `(γ,τ)`-compliance, negligibility.
 * `Goldfish.Protocol` — the abstract `Execution` data and `Spec` interface.
@@ -25,7 +25,7 @@ graph; each numbered statement is tracked by a GitHub issue.
   under `(1/2, 4∆)`-compliance.
 * `Goldfish.EbbAndFlow` — partial synchrony / ebb-and-flow, paper App. D: Prop. 2–5,
   Lem. 6–9, Thm. 7 under `(1/3, 3∆)`-compliance with the accountability gadget.
-* `Goldfish.Probabilistic` — measure-theoretic foundation (paper App. G) for the
-  Phase-2 replacement of the good-event axioms: the `Lottery` model and the
+* `Goldfish.Probabilistic` — measure-theoretic foundation (paper App. G) for
+  replacing the good-event axioms: the `Lottery` model and the
   Chernoff/Hoeffding honest-majority concentration bound.
 -/

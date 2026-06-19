@@ -5,9 +5,9 @@ import Goldfish.Basic
 # Probabilistic foundation — the Chernoff core of Lemma 1 (paper App. G)
 
 The probabilistic "w.o.p." facts of Goldfish (Lemma 1 / Lemma 4 / Proposition 1)
-are, in Phase 1, declared as deterministic good-event axioms in `Goldfish.Axioms`
-and threaded as hypotheses. **Phase 2** (issues #23–#25) replaces those axioms
-with measure-theoretic proofs from the VRF-lottery randomness.
+are declared as deterministic good-event axioms in `Goldfish.Axioms` and threaded
+as hypotheses. This layer replaces those axioms with measure-theoretic proofs
+from the VRF-lottery randomness.
 
 This module is the **foundation** for that replacement: it models the per-slot
 eligibility lottery as a probability space and proves the central concentration

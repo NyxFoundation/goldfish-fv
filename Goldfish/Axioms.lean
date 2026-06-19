@@ -7,11 +7,10 @@ Two kinds of facts are declared (never proved with `sorry`):
 
 * **Probabilistic good events** — the conclusions of Lemma 1, Lemma 4 and
   Proposition 1. These hold *with overwhelming probability* via VRF
-  pseudorandomness + Chernoff bounds (paper App. G). Per the formalization
-  strategy they are declared as axioms in **Phase 1** so the deterministic
-  dependents can proceed by threading the good event as a hypothesis; the
-  measure-theoretic proof replacing each axiom is tracked by a separate
-  **Phase 2** issue (`phase2` label).
+  pseudorandomness + Chernoff bounds (paper App. G). They are declared as
+  axioms so the deterministic dependents can proceed by threading the good
+  event as a hypothesis; the measure-theoretic proof replacing each axiom is
+  developed separately.
 
 * **External [61] results** — Neu–Tas–Tse accountability-gadget theorems used by
   the partial-synchrony / ebb-and-flow proofs (Thm. 7, Lem. 6–9, Prop. 2–5).
@@ -43,8 +42,8 @@ def HonestLeaderEveryWindow (E : Execution Block Validator) (κ : ℕ) : Prop :=
 
 /-! ## Lemma 1 — VRF lottery good event under `(1/2, 3∆)`-compliance
 
-Phase 1 axiom. Phase 2 (measure-theoretic Chernoff proof) is tracked by a
-separate `phase2` issue and does **not** block dependents. -/
+Declared as an axiom; the measure-theoretic Chernoff proof that replaces it is
+developed separately and does **not** block dependents. -/
 
 /-- **Lemma 1** (IACR 2022/1171, Lem. 1). For a `(1/2, 3∆)`-compliant execution,
 w.o.p. every slot has an honest eligible-voter majority and every `κ`-window has
@@ -57,7 +56,7 @@ axiom lemma1 (E : Execution Block Validator) {ε : ℝ} {n₀ κ : ℕ}
 
 The `(1/2, 4∆)`-compliance analogue of Lemma 1 for the fast-confirmation
 proofs (same conclusion shape; the slot→round timing uses `4∆` instead of `3∆`).
-Phase 1 axiom; Phase 2 proof tracked separately. -/
+Declared as an axiom; the replacing proof is developed separately. -/
 
 /-- **Lemma 4** (IACR 2022/1171, Lem. 4). For a `(1/2, 4∆)`-compliant execution,
 w.o.p. every slot has an honest eligible-voter majority and every `κ`-window has
@@ -68,7 +67,7 @@ axiom lemma4 (E : Execution Block Validator) {ε : ℝ} {n₀ κ : ℕ}
 
 /-! ## Proposition 1 — eligible-voter count bounds (Chernoff)
 
-Phase 1 axiom; Phase 2 proof tracked separately. -/
+Declared as an axiom; the replacing proof is developed separately. -/
 
 /-- **Proposition 1** (IACR 2022/1171, Prop. 1). With `T_hor = poly(κ)`, w.o.p. at
 most `voterUB = (1+ε)·n·thr_v` validators are eligible to vote at any slot; and
