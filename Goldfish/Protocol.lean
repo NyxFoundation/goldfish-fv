@@ -105,6 +105,25 @@ def Compliant (γ ε : ℝ) (n₀ : ℕ) : Prop := Goldfish.Compliant E.adv E.ho
 
 end Execution
 
+/-- **Ledger-safety core.** For a chain assignment `chain` over an execution `E`
+whose blocks persist into the fork choice of every later awake-honest validator
+(`persists`) and are a prefix of their own fork choice (`chain_le_forkChoice`),
+any two outputs taken at awake-honest points are consistent. This is the shared
+proof behind `Ledger.safe` and `Ledger4Δ.safe`: regime-independent, depending
+only on the round schedule baked into `chain`. -/
+theorem consistent_of_persists {Block Validator : Type*} [BlockTree Block]
+    {E : Execution Block Validator} {chain : Validator → Round → Block}
+    (persists : ∀ {r r' : Round} {id id' : Validator}, r ≤ r' →
+      E.awakeHonest id r → E.awakeHonest id' r' → chain id r ≤ E.forkChoice id' r')
+    (chain_le_forkChoice : ∀ {r : Round} {id : Validator},
+      E.awakeHonest id r → chain id r ≤ E.forkChoice id r)
+    {r r' : Round} {id id' : Validator}
+    (h : E.awakeHonest id r) (h' : E.awakeHonest id' r') :
+    BlockTree.Consistent (chain id r) (chain id' r') := by
+  rcases le_total r r' with hrr | hrr
+  · exact BlockTree.consistent_of_le_of_le (persists hrr h h') (chain_le_forkChoice h')
+  · exact (BlockTree.consistent_of_le_of_le (persists hrr h' h) (chain_le_forkChoice h)).symm
+
 /-- The abstract protocol specification: the defining behaviour of GHOST-Eph,
 the voting rule, leader recognition and synchronous message delivery, stated as
 hypotheses. Track-A/B theorems are derived from `Spec` together with the

@@ -52,14 +52,11 @@ def Safe (L : Ledger4Δ E κ) : Prop :=
     E.awakeHonest id r → E.awakeHonest id' r' →
       BlockTree.Consistent (L.chain id r) (L.chain id' r')
 
-/-- Safety holds for every `Ledger4Δ` assignment — same proof as `Ledger.safe`. -/
+/-- Safety holds for every `Ledger4Δ` assignment, via the shared
+`consistent_of_persists` (the same core as `Ledger.safe`). -/
 theorem safe (L : Ledger4Δ E κ) : L.Safe := by
   intro r r' id id' h h'
-  rcases le_total r r' with hrr | hrr
-  · exact BlockTree.consistent_of_le_of_le
-      (L.confirmed_persists hrr h h') (L.chain_le_forkChoice h')
-  · exact (BlockTree.consistent_of_le_of_le
-      (L.confirmed_persists hrr h' h) (L.chain_le_forkChoice h)).symm
+  exact consistent_of_persists L.confirmed_persists L.chain_le_forkChoice h h'
 
 end Ledger4Δ
 

@@ -62,17 +62,12 @@ def Safe (L : Ledger E κ) : Prop :=
     E.awakeHonest id r → E.awakeHonest id' r' →
       BlockTree.Consistent (L.chain id r) (L.chain id' r')
 
-/-- Safety holds for every confirmed-ledger assignment. Both ledgers are prefixes
-of the later validator's fork choice — one by `confirmed_persists`, the other by
-`chain_le_forkChoice` — hence consistent, since ancestors of a common block form
-a chain (`BlockTree.consistent_of_le_of_le`). -/
+/-- Safety holds for every confirmed-ledger assignment, via the shared
+`consistent_of_persists`: both ledgers are prefixes of the later validator's fork
+choice — one by `confirmed_persists`, the other by `chain_le_forkChoice`. -/
 theorem safe (L : Ledger E κ) : L.Safe := by
   intro r r' id id' h h'
-  rcases le_total r r' with hrr | hrr
-  · exact BlockTree.consistent_of_le_of_le
-      (L.confirmed_persists hrr h h') (L.chain_le_forkChoice h')
-  · exact (BlockTree.consistent_of_le_of_le
-      (L.confirmed_persists hrr h' h) (L.chain_le_forkChoice h)).symm
+  exact consistent_of_persists L.confirmed_persists L.chain_le_forkChoice h h'
 
 end Ledger
 
