@@ -1,6 +1,0 @@
-### Statement (line 2044)
-Proposition 3 (Prop. 2 of [61]). The BFT protocol satisfies n/3-liveness
-after max(GST, GAT) with transaction confirmation time Tbft < ∞.
-
-### Proof (line 0)
-(no formal proof in paper)

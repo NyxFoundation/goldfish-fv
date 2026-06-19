@@ -11,7 +11,7 @@ Core types shared by every numbered statement of *Goldfish* (IACR ePrint
 that isolate the probabilistic core (Lem. 1/4, Prop. 1).
 
 Protocol mechanics (GHOST-Eph fork choice, voting) are an abstract interface in
-`Goldfish.Protocol` (Barrier 3 of `docs/formalization-strategy.md`); the
+`Goldfish.Protocol` (Barrier 3 of `README.md`); the
 probabilistic good events and the external [61] results are declared in
 `Goldfish.Axioms`.
 -/
@@ -103,7 +103,7 @@ faster than every inverse polynomial in the security parameter.
 
 The w.o.p. error terms throughout the paper are negligible; the composition API
 (e.g. `negl(κ) + negl(λ)` is negligible) belongs to the probabilistic layer
-built out in the Phase-2 issues that replace the good-event axioms. -/
+that replaces the good-event axioms. -/
 def Negligible (f : ℕ → ℝ) : Prop :=
   ∀ c : ℕ, ∃ N : ℕ, ∀ n ≥ N, |f n| < 1 / (n : ℝ) ^ c
 

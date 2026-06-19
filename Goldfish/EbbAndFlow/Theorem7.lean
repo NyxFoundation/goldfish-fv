@@ -15,7 +15,7 @@ Def. 4 has three clauses for the two ledgers `ch_acc ⪯ ch_ava`:
   network is synchronous and a `1/2` honest majority is awake;
 * **Prefix** — `ch_acc` is always a prefix of `ch_ava`.
 
-The proof assembles the Track C results: P1's safety is `[61, Thm. 3]`
+The proof assembles the ebb-and-flow results: P1's safety is `[61, Thm. 3]`
 (`ext61_accountableSafety`) and its liveness is `lemma7` fed the healing security
 of `lemma9`; P2 is `lemma6`; Prefix is the `Gadget` construction
 `chacc_le_chava`.
@@ -43,7 +43,7 @@ structure EbbAndFlowProperty (G : Gadget E) (TX : TxModel E) (Tava Theal Tacc : 
   prefix_acc_ava : ∀ {id : Validator} {r : Round}, G.chacc id r ≤ G.chava id r
 
 /-- **Theorem 7.** Goldfish with the accountability gadget satisfies the
-ebb-and-flow property of Def. 4. The hypotheses are the Track C ingredients:
+ebb-and-flow property of Def. 4. The hypotheses are the partial-synchrony ingredients:
 Lemma 1's good events (`hmaj`, `hwin`), the Proposition 2 identity that `ch_ava`
 is the genesis-based ledger `L` (`hchava`), recency (Lemma 8, `hrecency`) and the
 two operational gadget liveness events (`healing_liveness`, `accountable_liveness`)

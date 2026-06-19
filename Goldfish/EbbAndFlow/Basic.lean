@@ -19,7 +19,7 @@ do not have:
   and the accountable final-prefix ledger `ch_acc` (the checkpointed prefix).
   By construction `ch_acc ⪯ ch_ava` (the *Prefix* clause of Def. 4).
 
-Following Barrier 3 of `docs/formalization-strategy.md`, these mechanics are an
+Following Barrier 3 of `README.md`, these mechanics are an
 **abstract interface**: `Gadget` bundles the observable data, `GadgetSpec`
 (added per proof) bundles the protocol-mechanic bridges, and the external [61]
 accountability-gadget theorems are declared as axioms in

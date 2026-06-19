@@ -3,11 +3,12 @@ import Goldfish.Basic
 /-!
 # Goldfish — abstract protocol interface
 
-Per Barrier 3 of `docs/formalization-strategy.md`, we do **not** implement
+Per Barrier 3 of `README.md`, we do **not** implement
 Algorithms 1–6 operationally. Instead the GHOST-Eph fork choice, the slot/round
 structure and the voting rule are captured by an abstract interface: an
 `Execution` of observable data plus a `Spec` bundling the protocol's defining
-behaviour as hypotheses. Every Track-A/B theorem is then *derived* from `Spec`.
+behaviour as hypotheses. Every synchronous-security and fast-confirmation theorem
+is then *derived* from `Spec`.
 
 An executable model can later replace `Spec` (discharging its fields) without
 changing any theorem statement.
@@ -107,8 +108,9 @@ end Execution
 
 /-- The abstract protocol specification: the defining behaviour of GHOST-Eph,
 the voting rule, leader recognition and synchronous message delivery, stated as
-hypotheses. Track-A/B theorems are derived from `Spec` together with the
-probabilistic good events declared in `Goldfish.Axioms`.
+hypotheses. The synchronous-security and fast-confirmation theorems are derived
+from `Spec` together with the probabilistic good events declared in
+`Goldfish.Axioms`.
 
 Every field is a protocol *mechanic* (a consequence of Alg. 1–6 and synchrony),
 never a consequence of a numbered lemma — so deriving the numbered lemmas from
