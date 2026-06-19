@@ -1,6 +1,6 @@
 # goldfish-fv
 
-A Lean 4 formalization of the **Goldfish** Ethereum consensus protocol (IACR ePrint 2022/1171). The paper's 21 numbered statements (Theorem 1–7, Lemma 1–9, Proposition 1–5) are formalized here. This README documents the proof discipline, the barriers and the decision for each, the dependency graph, and the Lean module layout.
+The paper's 21 numbered statements (Theorem 1–7, Lemma 1–9, Proposition 1–5) are formalized here. This README documents the proof discipline, the barriers and the decision for each, the dependency graph, and the Lean module layout.
 Build toward a formalization of the Goldfish safety and liveness results, using the paper's numbered statements as the specification target.
 
 ## Source
