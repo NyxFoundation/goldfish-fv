@@ -19,7 +19,7 @@ Two kinds of facts are declared (never proved with `sorry`):
   `ch_acc`/`ch_ava` ledgers, partial synchrony, `GST`/`GAT`) is modelled, so
   they are declared in `Goldfish.EbbAndFlow.External` over the `Gadget`
   interface — alongside those base types — rather than here. See
-  `docs/formalization-strategy.md` §"External reference [61]".
+  `README.md` §"External reference [61]".
 -/
 
 namespace Goldfish

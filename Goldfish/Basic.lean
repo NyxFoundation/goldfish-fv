@@ -11,7 +11,7 @@ Core types shared by every numbered statement of *Goldfish* (IACR ePrint
 that isolate the probabilistic core (Lem. 1/4, Prop. 1).
 
 Protocol mechanics (GHOST-Eph fork choice, voting) are an abstract interface in
-`Goldfish.Protocol` (Barrier 3 of `docs/formalization-strategy.md`); the
+`Goldfish.Protocol` (Barrier 3 of `README.md`); the
 probabilistic good events and the external [61] results are declared in
 `Goldfish.Axioms`.
 -/

@@ -5,7 +5,7 @@ import Goldfish.EbbAndFlow.Basic
 
 `GadgetSpec G` bundles the defining behaviour of the accountability gadget
 (Alg. 4–6) as hypotheses, exactly as `Spec`/`Spec4Δ` do for the core protocol
-(Barrier 3 of `docs/formalization-strategy.md`). Every Track-C statement is
+(Barrier 3 of `README.md`). Every Track-C statement is
 *derived* from `GadgetSpec` together with the external [61] axioms and the
 probabilistic good events; an operational gadget model can discharge these
 fields later without changing any statement.

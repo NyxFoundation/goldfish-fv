@@ -3,7 +3,7 @@ import Goldfish.Basic
 /-!
 # Goldfish — abstract protocol interface
 
-Per Barrier 3 of `docs/formalization-strategy.md`, we do **not** implement
+Per Barrier 3 of `README.md`, we do **not** implement
 Algorithms 1–6 operationally. Instead the GHOST-Eph fork choice, the slot/round
 structure and the voting rule are captured by an abstract interface: an
 `Execution` of observable data plus a `Spec` bundling the protocol's defining

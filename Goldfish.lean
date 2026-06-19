@@ -11,7 +11,7 @@ import Goldfish.Probabilistic
 # Goldfish
 
 Machine-checked formalization of the *Goldfish* Ethereum consensus protocol
-(IACR ePrint 2022/1171). See `docs/formalization-strategy.md` for the proof
+(IACR ePrint 2022/1171). See `README.md` for the proof
 discipline (`axiom` / hypothesis threading, never `sorry`) and the dependency
 graph; each numbered statement is tracked by a GitHub issue.
 
