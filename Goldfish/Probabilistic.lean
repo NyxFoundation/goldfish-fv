@@ -1,6 +1,7 @@
 import Goldfish.Probabilistic.Basic
 import Goldfish.Probabilistic.CountBound
 import Goldfish.Probabilistic.LeaderWindow
+import Goldfish.Probabilistic.Lottery
 
 /-!
 # Probabilistic layer (paper App. G)
@@ -18,4 +19,10 @@ The measure-theoretic foundation for replacing the good-event axioms
   window bounds (`window_fail_bound`, `no_leader_window_union_bound`)
   underlying Lemma 4's `HonestLeaderEveryWindow` good event (its
   honest-majority half is covered by the timing-agnostic `Lottery` model).
+* `Goldfish.Probabilistic.Lottery` — the concrete product-Bernoulli lottery
+  model (`eligLot` / `leaderLot`) discharging the sub-Gaussianity and
+  independence hypotheses of the abstract layer, and the capstone
+  `lemma1_good_event_bound`: the good-event failure probability behind
+  `axiom lemma1` proved with explicit constants, reducing the axiom to a
+  documented model-instantiation gap.
 -/
