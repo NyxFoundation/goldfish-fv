@@ -45,11 +45,11 @@ In the partial-synchrony / ebb-and-flow proofs the dependencies form a cycle: **
 
 Three layers, built in order. The synchronous-security layer is self-contained; fast confirmation and partial synchrony / ebb-and-flow each depend on it.
 
-- **Synchronous security** (`Goldfish.SynchronousSecurity`): Thm 1–3, Lem 1–3. Reorg resilience + security under `(1/2, 3∆)`-compliance.
-- **Fast confirmation** (`Goldfish.FastConfirmation`): Thm 4–6, Lem 4–5, Prop 1. `(1/2, 4∆)`-compliance.
+- **Synchronous security** (`Goldfish.SynchronousSecurity`): Thm 1–3, Lem 2–3 (Lem 1 is an axiom in `Goldfish.Axioms`). Reorg resilience + security under `(1/2, 3∆)`-compliance.
+- **Fast confirmation** (`Goldfish.FastConfirmation`): Thm 4–6, Lem 5 (Lem 4 and Prop 1 are axioms in `Goldfish.Axioms`). `(1/2, 4∆)`-compliance.
 - **Partial synchrony / ebb-and-flow** (`Goldfish.EbbAndFlow`): Thm 7, Lem 6–9, Prop 2–5. `(1/3, 3∆)`-compliance, accountability gadget overlay.
 
-Dependency graph (an arrow `A → B` means *A's proof depends on B*; `[61]` nodes are external axioms from ref [61]):
+Dependency graph (an arrow `A → B` means *A's proof depends on B*; `[61]` nodes are external axioms from ref [61]). The graph records the **paper's** dependency structure; in the Lean code, edges into axiomatized statements are realized by threading their conclusions as hypotheses, and some edges are packaged as interface fields rather than direct lemma invocations (e.g. Thm 4 uses the `Spec4Δ` field `fast_outvotes_of_honest_majority` — the 4∆ analogue of Lem 3 — instead of Lem 3 itself, and Prop 1 anchors the `confirms_of_honest_votes` field behind Thm 6 rather than being invoked by Lem 5):
 
 ```mermaid
 flowchart TD

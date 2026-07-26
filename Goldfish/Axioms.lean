@@ -69,10 +69,17 @@ axiom lemma4 (E : Execution Block Validator) {ε : ℝ} {n₀ κ : ℕ}
 
 Declared as an axiom; the replacing proof is developed separately. -/
 
-/-- **Proposition 1** (IACR 2022/1171, Prop. 1). With `T_hor = poly(κ)`, w.o.p. at
-most `voterUB = (1+ε)·n·thr_v` validators are eligible to vote at any slot; and
-under `(1/2, 4∆)`-compliance, w.o.p. adversary eligible voters are fewer than
-`advUB = ½·n·thr_v` at every slot. -/
+/-- **Proposition 1** (IACR 2022/1171, Prop. 1). Under `(1/2, 4∆)`-compliance,
+w.o.p. the eligible-voter count is at most `voterUB` and the adversary
+eligible-voter count is below `advUB` at every slot. In the paper the bounds are
+`voterUB = (1+ε)·n·thr_v` and `advUB = ½·n·thr_v` over a `poly(κ)` slot horizon;
+here they are abstract parameters and the quantifier ranges over all slots.
+
+WARNING: `voterUB`/`advUB` are unconstrained universally-quantified parameters,
+so as stated the axiom yields its conclusion even for `advUB = 0` and is
+unsound once any compliant execution is exhibited. It is currently unused;
+its statement must be repaired (fixing the bounds to the paper's values)
+before any proof relies on it. -/
 axiom proposition1 (E : Execution Block Validator) {ε : ℝ} {n₀ : ℕ}
     (voterUB advUB : ℝ) (hcomp : E.Compliant (1 / 2) ε n₀) :
     (∀ t : Slot, (E.eligibleVoters t : ℝ) ≤ voterUB) ∧
