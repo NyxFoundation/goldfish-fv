@@ -21,7 +21,9 @@ The paper's cycle is `Lem 7 → Lem 9 → Lem 8 → Lem 7`; the only edge *into*
 Lemma 8 from Lemma 7 is the iteration-length bound (a checkpoint's proposal is at
 most `Trcnt` old), which is a self-contained gadget timing fact. Extracting that
 as the bridge `iterationLength_recent` breaks the cycle, so the three lemmas are
-proved in the acyclic order **Lemma 8 → Lemma 9 → Lemma 7**.
+stated in the acyclic order **Lemma 8 → Lemma 9 → Lemma 7**: each later lemma
+consumes the earlier one's conclusion as an explicit hypothesis (`hrecency`,
+`hheal`) rather than by invoking it, so a top-level composition can chain them.
 
 Following Barrier 3, the irreducibly operational steps of the healing argument
 (the per-window honest-leader liveness event, the BFT-overlay accountable
@@ -76,7 +78,8 @@ healing event: in each window after stabilization an honest iteration leader's
 proposal — recent by Lemma 8 and non-conflicting by the gap property
 (Proposition 5) — carries a fresh honest block into `ch_ava`. That operational
 event is the gadget mechanic `healing_liveness`; Lemma 9 supplies it with the
-honest-leader good event (Lemma 1), recency (Lemma 8) and the gap property
+honest-leader good event (Lemma 1's conclusion, threaded as `hwin`), recency
+(Lemma 8's conclusion, threaded as `hrecency`) and the gap property
 (Proposition 5). -/
 theorem lemma9 {κ : ℕ} {G : Gadget E} (L : Ledger E κ) (TX : TxModel E)
     (hsafe : G.SafeAfter G.chava 0)
@@ -120,8 +123,9 @@ proposal within each iteration; iteration entrance is synchronized
 (Proposition 4); by Lemma 9 that proposal carries a fresh honest block, which —
 being checkpointed — enters `ch_acc`. The gadget mechanic `accountable_liveness`
 performs that inclusion; Lemma 7 supplies it with the healing security of
-`ch_ava` (Lemma 9), BFT liveness (Proposition 3) and the checkpoint-consistency
-of [61, Thm. 4]. -/
+`ch_ava` (Lemma 9's conclusion, threaded as `hheal`) and the
+checkpoint-consistency of [61, Thm. 4]. The BFT-liveness step (Proposition 3)
+is internal to the `accountable_liveness` mechanic, not passed by Lemma 7. -/
 theorem lemma7 {G : Gadget E} (TX : TxModel E)
     (Theal Tacc : ℕ)
     (hheal : G.SecureAfter TX G.chava (G.maxGAS + E.Δ + 2 * G.Tchkpt)

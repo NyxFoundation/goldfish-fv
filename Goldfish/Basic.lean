@@ -7,8 +7,9 @@ import Mathlib.Data.Real.Basic
 
 Core types shared by every numbered statement of *Goldfish* (IACR ePrint
 2022/1171): the block-tree prefix order `⪯`, slots and rounds, the
-`(γ,τ)`-compliance predicate (Def. 2), and the `negl` / `w.o.p.` abstractions
-that isolate the probabilistic core (Lem. 1/4, Prop. 1).
+`(γ,τ)`-compliance predicate (Def. 2), and the `Negligible` abstraction that
+isolates the probabilistic core (Lem. 1/4, Prop. 1); `w.o.p.` remains prose
+shorthand for "except with probability `negl(κ) + negl(λ)`".
 
 Protocol mechanics (GHOST-Eph fork choice, voting) are an abstract interface in
 `Goldfish.Protocol` (Barrier 3 of `README.md`); the
@@ -81,7 +82,7 @@ end BlockTree
 /-! ## `(γ,τ)`-compliance (Def. 2) -/
 
 /-- `(γ,τ)`-compliance, key-evolving-primitives form (Def. 2): in every round the
-adversary fraction `A_r / (A_r + H_r)` stays bounded below `γ - ε`, and at least
+adversary fraction `A_r / (A_r + H_r)` is at most `γ - ε`, and strictly more than
 `γ·n₀ = Θ(κ)` honest validators are awake.
 
 Here `adv r = A_r` and `hon r = H_r`. The `τ`-round mildly-adaptive corruption
@@ -91,9 +92,9 @@ arithmetic predicate. -/
 structure Compliant (adv hon : Round → ℕ) (γ ε : ℝ) (n₀ : ℕ) : Prop where
   /-- The slack `ε` is strictly positive. -/
   eps_pos : 0 < ε
-  /-- The adversary fraction stays below `γ - ε` in every round. -/
+  /-- The adversary fraction is at most `γ - ε` in every round. -/
   frac_bound : ∀ r : Round, (adv r : ℝ) / (adv r + hon r) ≤ γ - ε
-  /-- At least `γ·n₀` honest validators are awake in every round. -/
+  /-- Strictly more than `γ·n₀` honest validators are awake in every round. -/
   honest_lb : ∀ r : Round, (γ : ℝ) * n₀ < hon r
 
 /-! ## Negligibility / overwhelming probability -/

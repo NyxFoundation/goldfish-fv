@@ -5,10 +5,12 @@ import Goldfish.EbbAndFlow.Basic
 
 `GadgetSpec G` bundles the defining behaviour of the accountability gadget
 (Alg. 4–6) as hypotheses, exactly as `Spec`/`Spec4Δ` do for the core protocol
-(Barrier 3 of `README.md`). Every ebb-and-flow statement is
-*derived* from `GadgetSpec` together with the external [61] axioms and the
-probabilistic good events; an operational gadget model can discharge these
-fields later without changing any statement.
+(Barrier 3 of `README.md`). Proposition 2, Proposition 4 and Lemma 9's proposal
+clause are *derived* from `GadgetSpec` together with the external [61] axioms
+and the probabilistic good events; the remaining ebb-and-flow statements carry
+their operational steps as documented per-theorem hypotheses instead (see
+`Goldfish.EbbAndFlow.Healing`). An operational gadget model can discharge the
+fields and those hypotheses later without changing any statement.
 
 Fields are introduced as the proofs need them; each is a gadget *mechanic*
 (a consequence of the iteration / checkpoint / gadget-vote rules), never a

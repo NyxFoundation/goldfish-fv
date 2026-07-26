@@ -79,8 +79,9 @@ private theorem all_fast_votes_from_leader (FS : Spec4Δ E) {lead : Validator} {
    a transaction received by round `r` is in every awake honest validator's
    `Ledger4Δ` from round `r + (2κ+2)·4∆` onward.
 2. **Optimistic fast confirmation**: if an honest leader `lead` is recognized at
-   slot `t` and all awake honest validators are eligible to vote at `t`, then
-   every validator awake at `fastConfirmRound t` fast confirms `P*.B`. -/
+   slot `t`, then every honest validator awake at `fastConfirmRound t` fast
+   confirms `P*.B`. (The paper's optimistic voter-participation condition is
+   packaged inside the `Spec4Δ.confirms_of_honest_votes` mechanic.) -/
 theorem theorem6 (FS : Spec4Δ E) (FL : Ledger4Δ E κ) (TX : TxModel4Δ E)
     (hmaj : HonestMajorityPerSlot E) (hwin : HonestLeaderEveryWindow E κ)
     {lead : Validator} {t : Slot}

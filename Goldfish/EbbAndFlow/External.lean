@@ -69,7 +69,7 @@ axiom ext61_bftAgreement (G : Gadget E) :
 > By [61, Thm. 3], `ch_acc` provides accountable safety with resilience `n/3`
 > except with probability `negl(λ)` in the partially synchronous sleepy model.
 
-Used by Lemma 9 and Theorem 7 (the `P1` safety clause). Stated as safety of
+Used by Theorem 7 (the `P1` safety clause). Stated as safety of
 `ch_acc` at all rounds. -/
 axiom ext61_accountableSafety (G : Gadget E) : G.SafeAfter G.chacc 0
 
